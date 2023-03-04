@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "371379231137",
+    "project_id": "generativai",
+    "storage_bucket": "generativai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371379231137:android:eec7f9c82d7f86d87fd3e0",
+        "android_client_info": {
+          "package_name": "games.fundoo.genai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371379231137-1l8nddudgntq14bcpajmgbllgkaafr15.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "games.fundoo.genai",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "371379231137-8ctrfkv65dcv29icccvjeed0bkivukch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_Mu0xUQ2gnTKeNty9h6jJaC9FYKcNnkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371379231137-8ctrfkv65dcv29icccvjeed0bkivukch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "371379231137-n5kh1nuo1cvgvs8sst0tqvnromm8g1v5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "games.fundoo.genai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
