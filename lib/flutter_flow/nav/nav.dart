@@ -21,8 +21,8 @@ export 'serialization_util.dart';
 const kTransitionInfoKey = '__transition_info__';
 
 class AppStateNotifier extends ChangeNotifier {
-  GenaiFirebaseUser? initialUser;
-  GenaiFirebaseUser? user;
+  GenerativeAIFirebaseUser? initialUser;
+  GenerativeAIFirebaseUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -47,7 +47,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(GenaiFirebaseUser newUser) {
+  void update(GenerativeAIFirebaseUser newUser) {
     initialUser ??= newUser;
     user = newUser;
     // Refresh the app on auth change unless explicitly marked otherwise.
@@ -70,13 +70,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? HomeWidget() : LoginWidget(),
+          appStateNotifier.loggedIn ? ProfileWidget() : HomeWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? HomeWidget() : LoginWidget(),
+              appStateNotifier.loggedIn ? ProfileWidget() : HomeWidget(),
           routes: [
             FFRoute(
               name: 'Home',
@@ -87,6 +87,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'login',
               path: 'login',
               builder: (context, params) => LoginWidget(),
+            ),
+            FFRoute(
+              name: 'Pulse',
+              path: 'pulse',
+              builder: (context, params) => PulseWidget(),
+            ),
+            FFRoute(
+              name: 'Profile',
+              path: 'profile',
+              builder: (context, params) => ProfileWidget(),
+            ),
+            FFRoute(
+              name: 'Feedbacks',
+              path: 'feedbacks',
+              builder: (context, params) => FeedbacksWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -246,7 +261,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/login';
+            return '/home';
           }
           return null;
         },

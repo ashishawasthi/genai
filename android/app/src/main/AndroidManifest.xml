@@ -5,7 +5,7 @@
 
 
     <application
-        android:label="genai"
+        android:label="Generative AI Demo"
         tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">
@@ -45,7 +45,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="genai" android:host="genai.com" />
+                <data android:scheme="generativeai" android:host="fundoo.games" />
             </intent-filter>
 
         </activity>
