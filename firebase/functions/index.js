@@ -19,51 +19,72 @@ exports.analyseFeedbacks = functions.runWith({secrets: [openAiApiKey]}).firestor
   nlp.feedbacks.forEach((feedback, index) => {
     openaiRequest += "\nitem " + (index + 1) + ": " + feedback;
   });
-  // console.log("openaiRequest: ", openaiRequest);
-  return openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [
-      {role: "system", content: "You are relationship manager's assistant, analysing customer feedback sentiment and the coresponding topic."},
-      {role: "user", content: openaiRequest}],
-  }).then((response) => {
-    // console.log("response: ", response);
-    const responseText = response.data.choices[0].message.content;
-    // console.log("responseText: ", responseText);
-    nlpSnap.ref.update({
-      request: openaiRequest,
-      response: responseText,
-      updated: admin.firestore.FieldValue.serverTimestamp(),
-    });
-    // parse the JSON in responseText
 
-    // handle SyntaxError in JSON.parse
-    const responseJson = (function() {
-      try {
-        const jsonStart = responseText.indexOf("[{");
-        const jsonEnd = responseText.lastIndexOf("}]}]") + 4;
-        const jsonString = responseText.substring(jsonStart, jsonEnd);
-        console.log("response jsonString: ", jsonString);
-        return JSON.parse(jsonString);
-      } catch (error) {
+  // query nlp collection, for existing requests, if the request is same as the current request, return the response
+  return admin.firestore().collection("nlps").where("request", "==", openaiRequest).get().then((matchSnap) => {
+    if (matchSnap.empty) {
+      console.log("Request not in cache, calling OpenAI ChatCompletion API");
+      return openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {role: "system", content: "You are relationship manager's assistant, analysing customer feedback sentiment and the coresponding topic."},
+          {role: "user", content: openaiRequest}],
+      }).then((response) => {
+        const responseText = response.data.choices[0].message.content.replaceAll("\n", "").replace(/  +/g, " ").replaceAll(" {", "{").replaceAll("{ ", "{").replaceAll(" }", "}").replaceAll("} ", "}");
+        nlpSnap.ref.update({
+          request: openaiRequest,
+          response: responseText,
+          updated: admin.firestore.FieldValue.serverTimestamp(),
+          chached: false,
+        });
+        return registerFeedbacks(responseText, nlp, nlpSnap.ref);
+      }).catch((error) => {
         console.error(error);
-        const jsonStart = responseText.indexOf("\"item\"");
-        const jsonEnd = responseText.lastIndexOf("}]}") + 3;
-        const jsonString = "[{" + responseText.substring(jsonStart, jsonEnd) + "]";
-        console.log("response jsonString: ", jsonString);
-        return JSON.parse(jsonString);
-      }
-    })();
-
-    // add all feedback attributes from openaiRequest and responseText to the "feedbacks" collection
-    responseJson.forEach((feedback) => {
-      feedback.submission = nlp.feedbacks[feedback.item - 1];
-      feedback.nlp = nlpSnap.ref;
-      feedback.owner = nlp.owner;
-      feedback.created = admin.firestore.FieldValue.serverTimestamp();
-      console.log("Adding feedback: ", feedback);
-      admin.firestore().collection("feedbacks").add(feedback);
-    });
-  }).catch((error) => {
-    console.error(error);
+      });
+    } else {
+      console.log("Request found in cache!");
+      const responseText = matchSnap.docs[0].data().response.replaceAll("\n", "").replace(/  +/g, " ").replaceAll(" {", "{").replaceAll("{ ", "{").replaceAll(" }", "}").replaceAll("} ", "}");
+      nlpSnap.ref.update({
+        request: openaiRequest,
+        response: responseText,
+        updated: admin.firestore.FieldValue.serverTimestamp(),
+        chached: true,
+      });
+      console.log("Cached responseText: ", responseText);
+      return registerFeedbacks(responseText, nlp, nlpSnap.ref);
+    }
   });
 });
+
+/**
+ * add all feedback attributes from openaiRequest and responseText to the "feedbacks" collection
+ * @param {string} responseText the response from the OpenAI API call
+ * @param {object} nlp the nlp document just added
+ * @param {object} nlpRef the nlp document snapshot
+ */
+function registerFeedbacks(responseText, nlp, nlpRef) {
+  const responseJson = (function() {
+    try {
+      const jsonStart = responseText.indexOf("[{");
+      const jsonEnd = responseText.lastIndexOf("}]}]") + 4;
+      const jsonString = responseText.substring(jsonStart, jsonEnd);
+      console.log("Response jsonString: ", jsonString);
+      return JSON.parse(jsonString);
+    } catch (error) {
+      console.error(error);
+      const jsonStart = responseText.indexOf("\"item\"");
+      const jsonEnd = responseText.lastIndexOf("}]}") + 3;
+      const jsonString = "[{" + responseText.substring(jsonStart, jsonEnd) + "]";
+      console.log("Recovery response jsonString: ", jsonString);
+      return JSON.parse(jsonString);
+    }
+  })();
+  responseJson.forEach((feedback) => {
+    feedback.submission = nlp.feedbacks[feedback.item - 1];
+    feedback.nlp = nlpRef;
+    feedback.owner = nlp.owner;
+    feedback.created = admin.firestore.FieldValue.serverTimestamp();
+    // console.log("Adding feedback");
+    admin.firestore().collection("feedbacks").add(feedback);
+  });
+}
