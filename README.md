@@ -1,4 +1,4 @@
-# genai
+# GenerativeAI
 
 A new Flutter project.
 

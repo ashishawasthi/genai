@@ -30,6 +30,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     _model.emailTextController ??= TextEditingController();
     _model.passwordTextController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -41,6 +42,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -283,7 +286,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             return;
                           }
 
-                          context.goNamedAuth('Home', mounted);
+                          context.goNamedAuth('Profile', mounted);
                         },
                         text: 'Login',
                         options: FFButtonOptions(
@@ -327,7 +330,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               return;
                             }
 
-                            context.goNamedAuth('Home', mounted);
+                            context.goNamedAuth('Profile', mounted);
                           },
                           text: 'Continue as Guest',
                           options: FFButtonOptions(
@@ -374,7 +377,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   return;
                                 }
 
-                                context.goNamedAuth('Home', mounted);
+                                context.goNamedAuth('Profile', mounted);
                               },
                             ),
                           ),

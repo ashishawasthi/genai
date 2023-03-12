@@ -1,6 +1,6 @@
 {
-    "name": "genai",
-    "short_name": "genai",
+    "name": "GenerativeAI",
+    "short_name": "GenerativeAI",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

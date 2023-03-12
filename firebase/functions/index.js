@@ -7,8 +7,12 @@ const {Configuration, OpenAIApi} = require("openai");
 const {defineSecret} = require("firebase-functions/params");
 const openAiApiKey = defineSecret("OPENAI_API_KEY");
 
+const axios = require("axios");
+const cheerio = require("cheerio");
+const wordsCount = require("words-count").default;
+
 // onCreate function for the "nlps" collection, call OpenAI createChatCompletion API and update the collections with the details in response
-exports.analyseFeedbacks = functions.runWith({secrets: [openAiApiKey]}).firestore.document("nlps/{nlpId}").onCreate((nlpSnap, context) => {
+exports.onCreateNlp = functions.runWith({secrets: [openAiApiKey]}).firestore.document("nlps/{nlpId}").onCreate((nlpSnap, context) => {
   const nlp = nlpSnap.data();
   const configuration = new Configuration({
     apiKey: openAiApiKey.value(),
@@ -100,6 +104,54 @@ exports.analyseFeedbacks = functions.runWith({secrets: [openAiApiKey]}).firestor
     console.log("Unknown NLP type: " + nlp.type);
     return;
   }
+});
+
+// onCreate function for the "extracts" collection, this function is triggered when a new document is added to the "extracts" collection
+exports.onCreateExtract = functions.firestore.document("extracts/{extractId}").onCreate((extractSnap, context) => {
+  const extract = extractSnap.data();
+
+  // scrape extract.url and update the document with the cleaned text
+  return axios(extract.url).then((response) => {
+    const html = response.data;
+    const $ = cheerio.load(html);
+    let text = $("div#mw-content-text p").text();
+
+    // if wikipedia url, remove wiki comments
+    if (extract.url.includes("wikipedia")) {
+      text = removeWikiComments(text);
+    }
+    const words = wordsCount(text);
+    console.log("Extracted " + words + " words from " + extract.url);
+    // update the document with the cleaned text
+    extractSnap.ref.update({
+      clean: text,
+      updated: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    // call the OpenAI API to extract the facts from the text
+    if (text) {
+      const configuration = new Configuration({
+        apiKey: openAiApiKey.value(),
+      });
+      const openai = new OpenAIApi(configuration);
+      const openaiSystem = "You are an office assistant, extracting facts from documents";
+      const openaiUser1 = "Extract facts from the following document:\n\n" + text;
+      return openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {role: "system", content: openaiSystem},
+          {role: "user", content: openaiUser1}],
+      }).then((response) => {
+        return extractSnap.ref.update({
+          brief: response.data.choices[0].message.content,
+          updated: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }).catch(console.error);
+    } else {
+      console.log("No text to extract from");
+      return;
+    }
+  }).catch(console.error);
 });
 
 /**
@@ -212,4 +264,13 @@ function trimJsonString(rawResponseText) {
       replace(/\s*\}\s*\]/g, "}]").
       replace(/\{\s*\{/g, "{{").
       replace(/\}\s*\}/g, "}}");
+}
+
+/**
+ * Text from wikipedia page, to be cleaned up
+ * @param {string} text from wikipedia page
+ * @return {string} cleaned up text
+ */
+function removeWikiComments(text) {
+  return text.replace(/\[.*\]/g, "");
 }
