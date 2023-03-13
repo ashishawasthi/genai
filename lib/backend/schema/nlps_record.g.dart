@@ -19,13 +19,6 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.feedback;
-    if (value != null) {
-      result
-        ..add('feedback')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
-    }
     value = object.owner;
     if (value != null) {
       result
@@ -69,6 +62,41 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
+    value = object.chached;
+    if (value != null) {
+      result
+        ..add('chached')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.successful;
+    if (value != null) {
+      result
+        ..add('successful')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.type;
+    if (value != null) {
+      result
+        ..add('type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.system;
+    if (value != null) {
+      result
+        ..add('system')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.content;
+    if (value != null) {
+      result
+        ..add('content')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -91,10 +119,6 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'feedback':
-          result.feedback = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
-          break;
         case 'owner':
           result.owner = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -121,6 +145,26 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
+        case 'chached':
+          result.chached = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'successful':
+          result.successful = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'system':
+          result.system = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'content':
+          result.content = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -136,8 +180,6 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
 
 class _$NlpsRecord extends NlpsRecord {
   @override
-  final bool? feedback;
-  @override
   final String? owner;
   @override
   final String? request;
@@ -150,19 +192,33 @@ class _$NlpsRecord extends NlpsRecord {
   @override
   final BuiltList<String>? feedbacks;
   @override
+  final bool? chached;
+  @override
+  final bool? successful;
+  @override
+  final String? type;
+  @override
+  final String? system;
+  @override
+  final String? content;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$NlpsRecord([void Function(NlpsRecordBuilder)? updates]) =>
       (new NlpsRecordBuilder()..update(updates))._build();
 
   _$NlpsRecord._(
-      {this.feedback,
-      this.owner,
+      {this.owner,
       this.request,
       this.created,
       this.response,
       this.updated,
       this.feedbacks,
+      this.chached,
+      this.successful,
+      this.type,
+      this.system,
+      this.content,
       this.ffRef})
       : super._();
 
@@ -177,13 +233,17 @@ class _$NlpsRecord extends NlpsRecord {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is NlpsRecord &&
-        feedback == other.feedback &&
         owner == other.owner &&
         request == other.request &&
         created == other.created &&
         response == other.response &&
         updated == other.updated &&
         feedbacks == other.feedbacks &&
+        chached == other.chached &&
+        successful == other.successful &&
+        type == other.type &&
+        system == other.system &&
+        content == other.content &&
         ffRef == other.ffRef;
   }
 
@@ -194,25 +254,39 @@ class _$NlpsRecord extends NlpsRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, feedback.hashCode), owner.hashCode),
-                            request.hashCode),
-                        created.hashCode),
-                    response.hashCode),
-                updated.hashCode),
-            feedbacks.hashCode),
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, owner.hashCode),
+                                                request.hashCode),
+                                            created.hashCode),
+                                        response.hashCode),
+                                    updated.hashCode),
+                                feedbacks.hashCode),
+                            chached.hashCode),
+                        successful.hashCode),
+                    type.hashCode),
+                system.hashCode),
+            content.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'NlpsRecord')
-          ..add('feedback', feedback)
           ..add('owner', owner)
           ..add('request', request)
           ..add('created', created)
           ..add('response', response)
           ..add('updated', updated)
           ..add('feedbacks', feedbacks)
+          ..add('chached', chached)
+          ..add('successful', successful)
+          ..add('type', type)
+          ..add('system', system)
+          ..add('content', content)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -220,10 +294,6 @@ class _$NlpsRecord extends NlpsRecord {
 
 class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
   _$NlpsRecord? _$v;
-
-  bool? _feedback;
-  bool? get feedback => _$this._feedback;
-  set feedback(bool? feedback) => _$this._feedback = feedback;
 
   String? _owner;
   String? get owner => _$this._owner;
@@ -251,6 +321,26 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
   set feedbacks(ListBuilder<String>? feedbacks) =>
       _$this._feedbacks = feedbacks;
 
+  bool? _chached;
+  bool? get chached => _$this._chached;
+  set chached(bool? chached) => _$this._chached = chached;
+
+  bool? _successful;
+  bool? get successful => _$this._successful;
+  set successful(bool? successful) => _$this._successful = successful;
+
+  String? _type;
+  String? get type => _$this._type;
+  set type(String? type) => _$this._type = type;
+
+  String? _system;
+  String? get system => _$this._system;
+  set system(String? system) => _$this._system = system;
+
+  String? _content;
+  String? get content => _$this._content;
+  set content(String? content) => _$this._content = content;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -262,13 +352,17 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
   NlpsRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _feedback = $v.feedback;
       _owner = $v.owner;
       _request = $v.request;
       _created = $v.created;
       _response = $v.response;
       _updated = $v.updated;
       _feedbacks = $v.feedbacks?.toBuilder();
+      _chached = $v.chached;
+      _successful = $v.successful;
+      _type = $v.type;
+      _system = $v.system;
+      _content = $v.content;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -294,13 +388,17 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
     try {
       _$result = _$v ??
           new _$NlpsRecord._(
-              feedback: feedback,
               owner: owner,
               request: request,
               created: created,
               response: response,
               updated: updated,
               feedbacks: _feedbacks?.build(),
+              chached: chached,
+              successful: successful,
+              type: type,
+              system: system,
+              content: content,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

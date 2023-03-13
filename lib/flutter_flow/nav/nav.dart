@@ -102,10 +102,48 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'Feedbacks',
               path: 'feedbacks',
               builder: (context, params) => FeedbacksWidget(),
+            ),
+            FFRoute(
+              name: 'Contents',
+              path: 'contents',
+              asyncParams: {
+                'nlp': getDoc(['nlps'], NlpsRecord.serializer),
+              },
+              builder: (context, params) => ContentsWidget(
+                nlp: params.getParam('nlp', ParamType.Document),
+              ),
+            ),
+            FFRoute(
+              name: 'Content',
+              path: 'content',
+              builder: (context, params) => ContentWidget(),
+            ),
+            FFRoute(
+              name: 'Extract',
+              path: 'extract',
+              asyncParams: {
+                'extract': getDoc(['extracts'], ExtractsRecord.serializer),
+              },
+              builder: (context, params) => ExtractWidget(
+                extract: params.getParam('extract', ParamType.Document),
+              ),
+            ),
+            FFRoute(
+              name: 'Fetch',
+              path: 'fetch',
+              builder: (context, params) => FetchWidget(),
+            ),
+            FFRoute(
+              name: 'Chat',
+              path: 'chat',
+              builder: (context, params) => ChatWidget(
+                chatRef: params.getParam('chatRef', ParamType.DocumentReference,
+                    false, ['extracts', 'chats']),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
-        ).toRoute(appStateNotifier),
-      ],
+        ),
+      ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
     );
 
@@ -151,6 +189,16 @@ extension NavigationExtensions on BuildContext {
               queryParams: queryParams,
               extra: extra,
             );
+
+  void safePop() {
+    // If there is only one route on the stack, navigate to the initial
+    // page instead of popping.
+    if (GoRouter.of(this).routerDelegate.matches.length <= 1) {
+      go('/');
+    } else {
+      pop();
+    }
+  }
 }
 
 extension GoRouterExtensions on GoRouter {

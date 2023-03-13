@@ -47,13 +47,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.createdTime;
-    if (value != null) {
-      result
-        ..add('created_time')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DateTime)));
-    }
     value = object.phoneNumber;
     if (value != null) {
       result
@@ -61,12 +54,12 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.cached;
+    value = object.createdTime;
     if (value != null) {
       result
-        ..add('cached')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+        ..add('created_time')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -106,17 +99,13 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.uid = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'created_time':
-          result.createdTime = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime?;
-          break;
         case 'phone_number':
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'cached':
-          result.cached = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+        case 'created_time':
+          result.createdTime = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -141,11 +130,9 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? uid;
   @override
-  final DateTime? createdTime;
-  @override
   final String? phoneNumber;
   @override
-  final bool? cached;
+  final DateTime? createdTime;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -157,9 +144,8 @@ class _$UsersRecord extends UsersRecord {
       this.displayName,
       this.photoUrl,
       this.uid,
-      this.createdTime,
       this.phoneNumber,
-      this.cached,
+      this.createdTime,
       this.ffRef})
       : super._();
 
@@ -178,9 +164,8 @@ class _$UsersRecord extends UsersRecord {
         displayName == other.displayName &&
         photoUrl == other.photoUrl &&
         uid == other.uid &&
-        createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
-        cached == other.cached &&
+        createdTime == other.createdTime &&
         ffRef == other.ffRef;
   }
 
@@ -190,13 +175,11 @@ class _$UsersRecord extends UsersRecord {
         $jc(
             $jc(
                 $jc(
-                    $jc(
-                        $jc($jc($jc(0, email.hashCode), displayName.hashCode),
-                            photoUrl.hashCode),
-                        uid.hashCode),
-                    createdTime.hashCode),
+                    $jc($jc($jc(0, email.hashCode), displayName.hashCode),
+                        photoUrl.hashCode),
+                    uid.hashCode),
                 phoneNumber.hashCode),
-            cached.hashCode),
+            createdTime.hashCode),
         ffRef.hashCode));
   }
 
@@ -207,9 +190,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('displayName', displayName)
           ..add('photoUrl', photoUrl)
           ..add('uid', uid)
-          ..add('createdTime', createdTime)
           ..add('phoneNumber', phoneNumber)
-          ..add('cached', cached)
+          ..add('createdTime', createdTime)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -234,17 +216,13 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get uid => _$this._uid;
   set uid(String? uid) => _$this._uid = uid;
 
-  DateTime? _createdTime;
-  DateTime? get createdTime => _$this._createdTime;
-  set createdTime(DateTime? createdTime) => _$this._createdTime = createdTime;
-
   String? _phoneNumber;
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
-  bool? _cached;
-  bool? get cached => _$this._cached;
-  set cached(bool? cached) => _$this._cached = cached;
+  DateTime? _createdTime;
+  DateTime? get createdTime => _$this._createdTime;
+  set createdTime(DateTime? createdTime) => _$this._createdTime = createdTime;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -261,9 +239,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _displayName = $v.displayName;
       _photoUrl = $v.photoUrl;
       _uid = $v.uid;
-      _createdTime = $v.createdTime;
       _phoneNumber = $v.phoneNumber;
-      _cached = $v.cached;
+      _createdTime = $v.createdTime;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -291,9 +268,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             displayName: displayName,
             photoUrl: photoUrl,
             uid: uid,
-            createdTime: createdTime,
             phoneNumber: phoneNumber,
-            cached: cached,
+            createdTime: createdTime,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

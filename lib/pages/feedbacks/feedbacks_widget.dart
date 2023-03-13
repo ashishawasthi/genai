@@ -102,6 +102,71 @@ class _FeedbacksWidgetState extends State<FeedbacksWidget> {
                   ),
                 ],
               ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            15.0, 15.0, 15.0, 15.0),
+                        child: Text(
+                          'Feedback',
+                          textAlign: TextAlign.center,
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 16.0,
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          15.0, 15.0, 15.0, 15.0),
+                      child: Text(
+                        'Topic',
+                        textAlign: TextAlign.center,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 16.0,
+                            ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          15.0, 15.0, 15.0, 15.0),
+                      child: Text(
+                        'Sentiment',
+                        textAlign: TextAlign.center,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 16.0,
+                            ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               StreamBuilder<List<FeedbacksRecord>>(
                 stream: queryFeedbacksRecord(
                   queryBuilder: (feedbacksRecord) => feedbacksRecord
@@ -203,7 +268,7 @@ class _FeedbacksWidgetState extends State<FeedbacksWidget> {
                                                       15.0, 5.0, 5.0, 5.0),
                                               child: Text(
                                                 analItem.topic!,
-                                                textAlign: TextAlign.start,
+                                                textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText1
@@ -220,6 +285,7 @@ class _FeedbacksWidgetState extends State<FeedbacksWidget> {
                                                     5.0, 5.0, 15.0, 5.0),
                                             child: Text(
                                               analItem.sentiment!.toString(),
+                                              textAlign: TextAlign.center,
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText1

@@ -7,6 +7,9 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(ChatsRecord.serializer)
+      ..add(ContentsRecord.serializer)
+      ..add(ExtractsRecord.serializer)
       ..add(FeedbacksRecord.serializer)
       ..add(NlpsRecord.serializer)
       ..add(SentimentStruct.serializer)

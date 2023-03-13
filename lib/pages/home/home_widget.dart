@@ -74,7 +74,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Select the function:',
+                    'Select the function for demo:',
                     style: FlutterFlowTheme.of(context).bodyText1,
                   ),
                 ],
@@ -110,7 +110,91 @@ class _HomeWidgetState extends State<HomeWidget> {
 
                         context.pushNamed('Pulse');
                       },
-                      text: 'Customer Pulse Demo',
+                      text: 'Customer Feedback',
+                      options: FFButtonOptions(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            20.0, 20.0, 20.0, 20.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(20.0, 15.0, 20.0, 10.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        if (FFAppState().session == null ||
+                            FFAppState().session == '') {
+                          // SetRandomSession
+                          setState(() {
+                            FFAppState().session = random_data.randomString(
+                              10,
+                              10,
+                              true,
+                              true,
+                              true,
+                            );
+                          });
+                        }
+
+                        context.pushNamed('Content');
+                      },
+                      text: 'Content Rewrite',
+                      options: FFButtonOptions(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            20.0, 20.0, 20.0, 20.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(20.0, 15.0, 20.0, 10.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        if (FFAppState().session == null ||
+                            FFAppState().session == '') {
+                          // SetRandomSession
+                          setState(() {
+                            FFAppState().session = random_data.randomString(
+                              10,
+                              10,
+                              true,
+                              true,
+                              true,
+                            );
+                          });
+                        }
+
+                        context.pushNamed('Fetch');
+                      },
+                      text: 'Document Query',
                       options: FFButtonOptions(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 20.0),

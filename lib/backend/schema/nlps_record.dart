@@ -9,8 +9,6 @@ part 'nlps_record.g.dart';
 abstract class NlpsRecord implements Built<NlpsRecord, NlpsRecordBuilder> {
   static Serializer<NlpsRecord> get serializer => _$nlpsRecordSerializer;
 
-  bool? get feedback;
-
   String? get owner;
 
   String? get request;
@@ -23,16 +21,30 @@ abstract class NlpsRecord implements Built<NlpsRecord, NlpsRecordBuilder> {
 
   BuiltList<String>? get feedbacks;
 
+  bool? get chached;
+
+  bool? get successful;
+
+  String? get type;
+
+  String? get system;
+
+  String? get content;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(NlpsRecordBuilder builder) => builder
-    ..feedback = false
     ..owner = ''
     ..request = ''
     ..response = ''
-    ..feedbacks = ListBuilder();
+    ..feedbacks = ListBuilder()
+    ..chached = false
+    ..successful = false
+    ..type = ''
+    ..system = ''
+    ..content = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('nlps');
@@ -55,24 +67,32 @@ abstract class NlpsRecord implements Built<NlpsRecord, NlpsRecordBuilder> {
 }
 
 Map<String, dynamic> createNlpsRecordData({
-  bool? feedback,
   String? owner,
   String? request,
   DateTime? created,
   String? response,
   DateTime? updated,
+  bool? chached,
+  bool? successful,
+  String? type,
+  String? system,
+  String? content,
 }) {
   final firestoreData = serializers.toFirestore(
     NlpsRecord.serializer,
     NlpsRecord(
       (n) => n
-        ..feedback = feedback
         ..owner = owner
         ..request = request
         ..created = created
         ..response = response
         ..updated = updated
-        ..feedbacks = null,
+        ..feedbacks = null
+        ..chached = chached
+        ..successful = successful
+        ..type = type
+        ..system = system
+        ..content = content,
     ),
   );
 

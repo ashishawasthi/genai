@@ -379,9 +379,9 @@ class _PulseWidgetState extends State<PulseWidget> {
 
                         final nlpsCreateData = {
                           ...createNlpsRecordData(
-                            feedback: true,
                             owner: FFAppState().session,
                             request: '',
+                            type: 'feedback',
                           ),
                           'feedbacks': functions.addNonEmptyToList(
                               _model.feedback1Controller.text,

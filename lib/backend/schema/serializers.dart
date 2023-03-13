@@ -4,6 +4,9 @@ import 'package:from_css_color/from_css_color.dart';
 import 'users_record.dart';
 import 'nlps_record.dart';
 import 'feedbacks_record.dart';
+import 'contents_record.dart';
+import 'extracts_record.dart';
+import 'chats_record.dart';
 
 import 'index.dart';
 
@@ -17,6 +20,9 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   UsersRecord,
   NlpsRecord,
   FeedbacksRecord,
+  ContentsRecord,
+  ExtractsRecord,
+  ChatsRecord,
   SentimentStruct,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
