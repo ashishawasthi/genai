@@ -97,6 +97,41 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.age18to25;
+    if (value != null) {
+      result
+        ..add('age18to25')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.age25to35;
+    if (value != null) {
+      result
+        ..add('age25to35')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.age35to50;
+    if (value != null) {
+      result
+        ..add('age35to50')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.age50to65;
+    if (value != null) {
+      result
+        ..add('age50to65')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.age65to80;
+    if (value != null) {
+      result
+        ..add('age65to80')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -165,6 +200,26 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
           result.content = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'age18to25':
+          result.age18to25 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'age25to35':
+          result.age25to35 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'age35to50':
+          result.age35to50 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'age50to65':
+          result.age50to65 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'age65to80':
+          result.age65to80 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -202,6 +257,16 @@ class _$NlpsRecord extends NlpsRecord {
   @override
   final String? content;
   @override
+  final bool? age18to25;
+  @override
+  final bool? age25to35;
+  @override
+  final bool? age35to50;
+  @override
+  final bool? age50to65;
+  @override
+  final bool? age65to80;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$NlpsRecord([void Function(NlpsRecordBuilder)? updates]) =>
@@ -219,6 +284,11 @@ class _$NlpsRecord extends NlpsRecord {
       this.type,
       this.system,
       this.content,
+      this.age18to25,
+      this.age25to35,
+      this.age35to50,
+      this.age50to65,
+      this.age65to80,
       this.ffRef})
       : super._();
 
@@ -244,6 +314,11 @@ class _$NlpsRecord extends NlpsRecord {
         type == other.type &&
         system == other.system &&
         content == other.content &&
+        age18to25 == other.age18to25 &&
+        age25to35 == other.age25to35 &&
+        age35to50 == other.age35to50 &&
+        age50to65 == other.age50to65 &&
+        age65to80 == other.age65to80 &&
         ffRef == other.ffRef;
   }
 
@@ -259,17 +334,33 @@ class _$NlpsRecord extends NlpsRecord {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, owner.hashCode),
-                                                request.hashCode),
-                                            created.hashCode),
-                                        response.hashCode),
-                                    updated.hashCode),
-                                feedbacks.hashCode),
-                            chached.hashCode),
-                        successful.hashCode),
-                    type.hashCode),
-                system.hashCode),
-            content.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        owner
+                                                                            .hashCode),
+                                                                    request
+                                                                        .hashCode),
+                                                                created
+                                                                    .hashCode),
+                                                            response.hashCode),
+                                                        updated.hashCode),
+                                                    feedbacks.hashCode),
+                                                chached.hashCode),
+                                            successful.hashCode),
+                                        type.hashCode),
+                                    system.hashCode),
+                                content.hashCode),
+                            age18to25.hashCode),
+                        age25to35.hashCode),
+                    age35to50.hashCode),
+                age50to65.hashCode),
+            age65to80.hashCode),
         ffRef.hashCode));
   }
 
@@ -287,6 +378,11 @@ class _$NlpsRecord extends NlpsRecord {
           ..add('type', type)
           ..add('system', system)
           ..add('content', content)
+          ..add('age18to25', age18to25)
+          ..add('age25to35', age25to35)
+          ..add('age35to50', age35to50)
+          ..add('age50to65', age50to65)
+          ..add('age65to80', age65to80)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -341,6 +437,26 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
   String? get content => _$this._content;
   set content(String? content) => _$this._content = content;
 
+  bool? _age18to25;
+  bool? get age18to25 => _$this._age18to25;
+  set age18to25(bool? age18to25) => _$this._age18to25 = age18to25;
+
+  bool? _age25to35;
+  bool? get age25to35 => _$this._age25to35;
+  set age25to35(bool? age25to35) => _$this._age25to35 = age25to35;
+
+  bool? _age35to50;
+  bool? get age35to50 => _$this._age35to50;
+  set age35to50(bool? age35to50) => _$this._age35to50 = age35to50;
+
+  bool? _age50to65;
+  bool? get age50to65 => _$this._age50to65;
+  set age50to65(bool? age50to65) => _$this._age50to65 = age50to65;
+
+  bool? _age65to80;
+  bool? get age65to80 => _$this._age65to80;
+  set age65to80(bool? age65to80) => _$this._age65to80 = age65to80;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -363,6 +479,11 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
       _type = $v.type;
       _system = $v.system;
       _content = $v.content;
+      _age18to25 = $v.age18to25;
+      _age25to35 = $v.age25to35;
+      _age35to50 = $v.age35to50;
+      _age50to65 = $v.age50to65;
+      _age65to80 = $v.age65to80;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -399,6 +520,11 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
               type: type,
               system: system,
               content: content,
+              age18to25: age18to25,
+              age25to35: age25to35,
+              age35to50: age35to50,
+              age50to65: age50to65,
+              age65to80: age65to80,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

@@ -90,66 +90,174 @@ class _ContentWidgetState extends State<ContentWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+              Wrap(
+                spacing: 0.0,
+                runSpacing: 0.0,
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                direction: Axis.horizontal,
+                runAlignment: WrapAlignment.start,
+                verticalDirection: VerticalDirection.down,
+                clipBehavior: Clip.none,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
                     child: Text(
-                      'Summary of content: ',
+                      'Content: ',
                       style: FlutterFlowTheme.of(context).bodyText1,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
+                    child: TextFormField(
+                      controller: _model.contentTextController,
+                      autofocus: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintText: '[Short summary of content]',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        filled: true,
+                        fillColor: FlutterFlowTheme.of(context).primaryColor,
+                        contentPadding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      maxLines: null,
+                      validator: _model.contentTextControllerValidator
+                          .asValidator(context),
                     ),
                   ),
                 ],
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
-                child: TextFormField(
-                  controller: _model.contentTextController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: '[Do not put proprietary information]',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
+                padding: EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 2.0),
+                child: Wrap(
+                  spacing: 0.0,
+                  runSpacing: 0.0,
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  direction: Axis.horizontal,
+                  runAlignment: WrapAlignment.start,
+                  verticalDirection: VerticalDirection.down,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
+                      child: Text(
+                        'Demographics to write for: ',
+                        style: FlutterFlowTheme.of(context).bodyText1,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
+                    SwitchListTile(
+                      value: _model.age18to25Value ??= true,
+                      onChanged: (newValue) async {
+                        setState(() => _model.age18to25Value = newValue!);
+                      },
+                      title: Text(
+                        'Age 18 to 25, unemployed, male/female',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 14.0,
+                            ),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      dense: false,
+                      controlAffinity: ListTileControlAffinity.trailing,
                     ),
-                    errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
+                    SwitchListTile(
+                      value: _model.age25to35Value ??= true,
+                      onChanged: (newValue) async {
+                        setState(() => _model.age25to35Value = newValue!);
+                      },
+                      title: Text(
+                        'Age 25 to 35, employed, male/female',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 14.0,
+                            ),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      dense: false,
+                      controlAffinity: ListTileControlAffinity.trailing,
                     ),
-                    focusedErrorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
+                    SwitchListTile(
+                      value: _model.age35to50Value ??= true,
+                      onChanged: (newValue) async {
+                        setState(() => _model.age35to50Value = newValue!);
+                      },
+                      title: Text(
+                        'Age 35 to 50, employed, male/female',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 14.0,
+                            ),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      dense: false,
+                      controlAffinity: ListTileControlAffinity.trailing,
                     ),
-                    filled: true,
-                    fillColor: FlutterFlowTheme.of(context).primaryColor,
-                    contentPadding:
-                        EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyText1,
-                  maxLines: null,
-                  validator: _model.contentTextControllerValidator
-                      .asValidator(context),
+                    SwitchListTile(
+                      value: _model.age50to65Value ??= true,
+                      onChanged: (newValue) async {
+                        setState(() => _model.age50to65Value = newValue!);
+                      },
+                      title: Text(
+                        'Age 50 to 65, employed, male/female',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 14.0,
+                            ),
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      dense: false,
+                      controlAffinity: ListTileControlAffinity.trailing,
+                    ),
+                    SwitchListTile(
+                      value: _model.age65to80Value ??= false,
+                      onChanged: (newValue) async {
+                        setState(() => _model.age65to80Value = newValue!);
+                      },
+                      title: Text(
+                        'Age 65 to 80, retired, male/female',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 14.0,
+                            ),
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      dense: false,
+                      controlAffinity: ListTileControlAffinity.trailing,
+                    ),
+                  ],
                 ),
               ),
               Row(
@@ -179,6 +287,11 @@ class _ContentWidgetState extends State<ContentWidget> {
                           content: _model.contentTextController.text,
                           request: '',
                           owner: FFAppState().session,
+                          age18to25: _model.age18to25Value,
+                          age25to35: _model.age25to35Value,
+                          age35to50: _model.age35to50Value,
+                          age50to65: _model.age50to65Value,
+                          age65to80: _model.age65to80Value,
                         );
                         var nlpsRecordReference = NlpsRecord.collection.doc();
                         await nlpsRecordReference.set(nlpsCreateData);
@@ -204,7 +317,7 @@ class _ContentWidgetState extends State<ContentWidget> {
 
                         setState(() {});
                       },
-                      text: 'Get Content',
+                      text: 'Rewrite Content',
                       options: FFButtonOptions(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 20.0),

@@ -35,13 +35,6 @@ class _$ExtractsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.brief;
-    if (value != null) {
-      result
-        ..add('brief')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.nlpRef;
     if (value != null) {
       result
@@ -78,6 +71,28 @@ class _$ExtractsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.summary;
+    if (value != null) {
+      result
+        ..add('summary')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.facts;
+    if (value != null) {
+      result
+        ..add('facts')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.response;
+    if (value != null) {
+      result
+        ..add('response')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -109,10 +124,6 @@ class _$ExtractsRecordSerializer
           result.clean = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'brief':
-          result.brief = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'nlpRef':
           result.nlpRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -135,6 +146,20 @@ class _$ExtractsRecordSerializer
           result.updated = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'summary':
+          result.summary = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'facts':
+          result.facts.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'response':
+          result.response = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -154,8 +179,6 @@ class _$ExtractsRecord extends ExtractsRecord {
   @override
   final String? clean;
   @override
-  final String? brief;
-  @override
   final DocumentReference<Object?>? nlpRef;
   @override
   final bool? fetched;
@@ -166,6 +189,12 @@ class _$ExtractsRecord extends ExtractsRecord {
   @override
   final DateTime? updated;
   @override
+  final String? summary;
+  @override
+  final BuiltList<String>? facts;
+  @override
+  final String? response;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ExtractsRecord([void Function(ExtractsRecordBuilder)? updates]) =>
@@ -174,12 +203,14 @@ class _$ExtractsRecord extends ExtractsRecord {
   _$ExtractsRecord._(
       {this.url,
       this.clean,
-      this.brief,
       this.nlpRef,
       this.fetched,
       this.briefed,
       this.owner,
       this.updated,
+      this.summary,
+      this.facts,
+      this.response,
       this.ffRef})
       : super._();
 
@@ -197,12 +228,14 @@ class _$ExtractsRecord extends ExtractsRecord {
     return other is ExtractsRecord &&
         url == other.url &&
         clean == other.clean &&
-        brief == other.brief &&
         nlpRef == other.nlpRef &&
         fetched == other.fetched &&
         briefed == other.briefed &&
         owner == other.owner &&
         updated == other.updated &&
+        summary == other.summary &&
+        facts == other.facts &&
+        response == other.response &&
         ffRef == other.ffRef;
   }
 
@@ -214,13 +247,19 @@ class _$ExtractsRecord extends ExtractsRecord {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, url.hashCode), clean.hashCode),
-                                brief.hashCode),
-                            nlpRef.hashCode),
-                        fetched.hashCode),
-                    briefed.hashCode),
-                owner.hashCode),
-            updated.hashCode),
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc($jc(0, url.hashCode),
+                                            clean.hashCode),
+                                        nlpRef.hashCode),
+                                    fetched.hashCode),
+                                briefed.hashCode),
+                            owner.hashCode),
+                        updated.hashCode),
+                    summary.hashCode),
+                facts.hashCode),
+            response.hashCode),
         ffRef.hashCode));
   }
 
@@ -229,12 +268,14 @@ class _$ExtractsRecord extends ExtractsRecord {
     return (newBuiltValueToStringHelper(r'ExtractsRecord')
           ..add('url', url)
           ..add('clean', clean)
-          ..add('brief', brief)
           ..add('nlpRef', nlpRef)
           ..add('fetched', fetched)
           ..add('briefed', briefed)
           ..add('owner', owner)
           ..add('updated', updated)
+          ..add('summary', summary)
+          ..add('facts', facts)
+          ..add('response', response)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -251,10 +292,6 @@ class ExtractsRecordBuilder
   String? _clean;
   String? get clean => _$this._clean;
   set clean(String? clean) => _$this._clean = clean;
-
-  String? _brief;
-  String? get brief => _$this._brief;
-  set brief(String? brief) => _$this._brief = brief;
 
   DocumentReference<Object?>? _nlpRef;
   DocumentReference<Object?>? get nlpRef => _$this._nlpRef;
@@ -276,6 +313,18 @@ class ExtractsRecordBuilder
   DateTime? get updated => _$this._updated;
   set updated(DateTime? updated) => _$this._updated = updated;
 
+  String? _summary;
+  String? get summary => _$this._summary;
+  set summary(String? summary) => _$this._summary = summary;
+
+  ListBuilder<String>? _facts;
+  ListBuilder<String> get facts => _$this._facts ??= new ListBuilder<String>();
+  set facts(ListBuilder<String>? facts) => _$this._facts = facts;
+
+  String? _response;
+  String? get response => _$this._response;
+  set response(String? response) => _$this._response = response;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -289,12 +338,14 @@ class ExtractsRecordBuilder
     if ($v != null) {
       _url = $v.url;
       _clean = $v.clean;
-      _brief = $v.brief;
       _nlpRef = $v.nlpRef;
       _fetched = $v.fetched;
       _briefed = $v.briefed;
       _owner = $v.owner;
       _updated = $v.updated;
+      _summary = $v.summary;
+      _facts = $v.facts?.toBuilder();
+      _response = $v.response;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -316,17 +367,32 @@ class ExtractsRecordBuilder
   ExtractsRecord build() => _build();
 
   _$ExtractsRecord _build() {
-    final _$result = _$v ??
-        new _$ExtractsRecord._(
-            url: url,
-            clean: clean,
-            brief: brief,
-            nlpRef: nlpRef,
-            fetched: fetched,
-            briefed: briefed,
-            owner: owner,
-            updated: updated,
-            ffRef: ffRef);
+    _$ExtractsRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$ExtractsRecord._(
+              url: url,
+              clean: clean,
+              nlpRef: nlpRef,
+              fetched: fetched,
+              briefed: briefed,
+              owner: owner,
+              updated: updated,
+              summary: summary,
+              facts: _facts?.build(),
+              response: response,
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'facts';
+        _facts?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ExtractsRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

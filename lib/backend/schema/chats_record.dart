@@ -9,13 +9,11 @@ part 'chats_record.g.dart';
 abstract class ChatsRecord implements Built<ChatsRecord, ChatsRecordBuilder> {
   static Serializer<ChatsRecord> get serializer => _$chatsRecordSerializer;
 
-  String? get conversation;
-
-  DateTime? get created;
-
-  DateTime? get updated;
-
   String? get owner;
+
+  BuiltList<String>? get conversation;
+
+  bool? get processed;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -24,8 +22,9 @@ abstract class ChatsRecord implements Built<ChatsRecord, ChatsRecordBuilder> {
   DocumentReference get parentReference => reference.parent.parent!;
 
   static void _initializeBuilder(ChatsRecordBuilder builder) => builder
-    ..conversation = ''
-    ..owner = '';
+    ..owner = ''
+    ..conversation = ListBuilder()
+    ..processed = false;
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -54,19 +53,16 @@ abstract class ChatsRecord implements Built<ChatsRecord, ChatsRecordBuilder> {
 }
 
 Map<String, dynamic> createChatsRecordData({
-  String? conversation,
-  DateTime? created,
-  DateTime? updated,
   String? owner,
+  bool? processed,
 }) {
   final firestoreData = serializers.toFirestore(
     ChatsRecord.serializer,
     ChatsRecord(
       (c) => c
-        ..conversation = conversation
-        ..created = created
-        ..updated = updated
-        ..owner = owner,
+        ..owner = owner
+        ..conversation = null
+        ..processed = processed,
     ),
   );
 

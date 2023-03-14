@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -110,57 +111,82 @@ class _ExtractWidgetState extends State<ExtractWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Text(
+                    '(It takes ~30 seconds to process document)',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          fontSize: 11.0,
+                        ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(3.0, 3.0, 3.0, 3.0),
+                    child: Container(
+                      width: double.infinity,
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      child: ExpandableNotifier(
+                        initialExpanded: false,
+                        child: ExpandablePanel(
+                          header: Text(
+                            'Cleaned up text from the document:',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Poppins',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 16.0,
+                                ),
+                          ),
+                          collapsed: Container(),
+                          expanded: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                columnExtractsRecord.clean!,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          theme: ExpandableThemeData(
+                            tapHeaderToExpand: true,
+                            tapBodyToExpand: false,
+                            tapBodyToCollapse: false,
+                            headerAlignment:
+                                ExpandablePanelHeaderAlignment.center,
+                            hasIcon: true,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Wrap(
+                    spacing: 0.0,
+                    runSpacing: 0.0,
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    direction: Axis.horizontal,
+                    runAlignment: WrapAlignment.start,
+                    verticalDirection: VerticalDirection.down,
+                    clipBehavior: Clip.none,
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             15.0, 15.0, 15.0, 15.0),
                         child: Text(
-                          'Document Text',
+                          'Short Summary:',
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             15.0, 15.0, 15.0, 15.0),
                         child: Text(
-                          columnExtractsRecord.clean!,
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            15.0, 15.0, 15.0, 15.0),
-                        child: Text(
-                          'Document Facts',
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            15.0, 15.0, 15.0, 15.0),
-                        child: Text(
-                          widget.extract!.brief!,
+                          columnExtractsRecord.summary!,
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
@@ -191,8 +217,11 @@ class _ExtractWidgetState extends State<ExtractWidget> {
                             final chatsCreateData = {
                               ...createChatsRecordData(
                                 owner: FFAppState().session,
+                                processed: false,
                               ),
-                              'created': FieldValue.serverTimestamp(),
+                              'conversation': [
+                                'Assistant: Let me know your question on these documents'
+                              ],
                             };
                             var chatsRecordReference = ChatsRecord.createDoc(
                                 columnExtractsRecord.reference);
@@ -204,11 +233,19 @@ class _ExtractWidgetState extends State<ExtractWidget> {
                                 const Duration(milliseconds: 6000));
                             // GotoFeedbacks
 
-                            context.pushNamed('Chat');
+                            context.pushNamed(
+                              'Chat',
+                              queryParams: {
+                                'chatRef': serializeParam(
+                                  _model.createdChat!.reference,
+                                  ParamType.DocumentReference,
+                                ),
+                              }.withoutNulls,
+                            );
 
                             setState(() {});
                           },
-                          text: 'Discuss Document',
+                          text: 'Chat',
                           options: FFButtonOptions(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 20.0, 20.0, 20.0, 20.0),
@@ -226,7 +263,7 @@ class _ExtractWidgetState extends State<ExtractWidget> {
                               color: Colors.transparent,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),

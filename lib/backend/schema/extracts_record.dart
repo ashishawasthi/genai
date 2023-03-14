@@ -15,8 +15,6 @@ abstract class ExtractsRecord
 
   String? get clean;
 
-  String? get brief;
-
   DocumentReference? get nlpRef;
 
   bool? get fetched;
@@ -27,6 +25,14 @@ abstract class ExtractsRecord
 
   DateTime? get updated;
 
+  String? get summary;
+
+  BuiltList<String>? get facts;
+
+  String? get response;
+
+  int? get words;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -34,10 +40,13 @@ abstract class ExtractsRecord
   static void _initializeBuilder(ExtractsRecordBuilder builder) => builder
     ..url = ''
     ..clean = ''
-    ..brief = ''
     ..fetched = false
     ..briefed = false
-    ..owner = '';
+    ..owner = ''
+    ..summary = ''
+    ..facts = ListBuilder()
+    ..response = ''
+    ..words = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('extracts');
@@ -63,12 +72,14 @@ abstract class ExtractsRecord
 Map<String, dynamic> createExtractsRecordData({
   String? url,
   String? clean,
-  String? brief,
   DocumentReference? nlpRef,
   bool? fetched,
   bool? briefed,
   String? owner,
   DateTime? updated,
+  String? summary,
+  String? response,
+  int? words,
 }) {
   final firestoreData = serializers.toFirestore(
     ExtractsRecord.serializer,
@@ -76,12 +87,15 @@ Map<String, dynamic> createExtractsRecordData({
       (e) => e
         ..url = url
         ..clean = clean
-        ..brief = brief
         ..nlpRef = nlpRef
         ..fetched = fetched
         ..briefed = briefed
         ..owner = owner
-        ..updated = updated,
+        ..updated = updated
+        ..summary = summary
+        ..facts = null
+        ..response = response
+        ..words = words,
     ),
   );
 

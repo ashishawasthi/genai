@@ -19,33 +19,27 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.conversation;
-    if (value != null) {
-      result
-        ..add('conversation')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.created;
-    if (value != null) {
-      result
-        ..add('created')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DateTime)));
-    }
-    value = object.updated;
-    if (value != null) {
-      result
-        ..add('updated')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DateTime)));
-    }
     value = object.owner;
     if (value != null) {
       result
         ..add('owner')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.conversation;
+    if (value != null) {
+      result
+        ..add('conversation')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.processed;
+    if (value != null) {
+      result
+        ..add('processed')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -69,21 +63,19 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'conversation':
-          result.conversation = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'created':
-          result.created = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime?;
-          break;
-        case 'updated':
-          result.updated = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime?;
-          break;
         case 'owner':
           result.owner = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'conversation':
+          result.conversation.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'processed':
+          result.processed = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -100,21 +92,18 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
 
 class _$ChatsRecord extends ChatsRecord {
   @override
-  final String? conversation;
-  @override
-  final DateTime? created;
-  @override
-  final DateTime? updated;
-  @override
   final String? owner;
+  @override
+  final BuiltList<String>? conversation;
+  @override
+  final bool? processed;
   @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ChatsRecord([void Function(ChatsRecordBuilder)? updates]) =>
       (new ChatsRecordBuilder()..update(updates))._build();
 
-  _$ChatsRecord._(
-      {this.conversation, this.created, this.updated, this.owner, this.ffRef})
+  _$ChatsRecord._({this.owner, this.conversation, this.processed, this.ffRef})
       : super._();
 
   @override
@@ -128,30 +117,26 @@ class _$ChatsRecord extends ChatsRecord {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ChatsRecord &&
-        conversation == other.conversation &&
-        created == other.created &&
-        updated == other.updated &&
         owner == other.owner &&
+        conversation == other.conversation &&
+        processed == other.processed &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, conversation.hashCode), created.hashCode),
-                updated.hashCode),
-            owner.hashCode),
+        $jc($jc($jc(0, owner.hashCode), conversation.hashCode),
+            processed.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ChatsRecord')
-          ..add('conversation', conversation)
-          ..add('created', created)
-          ..add('updated', updated)
           ..add('owner', owner)
+          ..add('conversation', conversation)
+          ..add('processed', processed)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -160,21 +145,19 @@ class _$ChatsRecord extends ChatsRecord {
 class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
   _$ChatsRecord? _$v;
 
-  String? _conversation;
-  String? get conversation => _$this._conversation;
-  set conversation(String? conversation) => _$this._conversation = conversation;
-
-  DateTime? _created;
-  DateTime? get created => _$this._created;
-  set created(DateTime? created) => _$this._created = created;
-
-  DateTime? _updated;
-  DateTime? get updated => _$this._updated;
-  set updated(DateTime? updated) => _$this._updated = updated;
-
   String? _owner;
   String? get owner => _$this._owner;
   set owner(String? owner) => _$this._owner = owner;
+
+  ListBuilder<String>? _conversation;
+  ListBuilder<String> get conversation =>
+      _$this._conversation ??= new ListBuilder<String>();
+  set conversation(ListBuilder<String>? conversation) =>
+      _$this._conversation = conversation;
+
+  bool? _processed;
+  bool? get processed => _$this._processed;
+  set processed(bool? processed) => _$this._processed = processed;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -187,10 +170,9 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
   ChatsRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _conversation = $v.conversation;
-      _created = $v.created;
-      _updated = $v.updated;
       _owner = $v.owner;
+      _conversation = $v.conversation?.toBuilder();
+      _processed = $v.processed;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -212,13 +194,25 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
   ChatsRecord build() => _build();
 
   _$ChatsRecord _build() {
-    final _$result = _$v ??
-        new _$ChatsRecord._(
-            conversation: conversation,
-            created: created,
-            updated: updated,
-            owner: owner,
-            ffRef: ffRef);
+    _$ChatsRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$ChatsRecord._(
+              owner: owner,
+              conversation: _conversation?.build(),
+              processed: processed,
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'conversation';
+        _conversation?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ChatsRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

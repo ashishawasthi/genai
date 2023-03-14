@@ -36,8 +36,7 @@ class _ChatWidgetState extends State<ChatWidget> {
     super.initState();
     _model = createModel(context, () => ChatModel());
 
-    _model.contentTextController ??=
-        TextEditingController(text: 'Get home loan for only 2% interest rate');
+    _model.userCommentController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -75,7 +74,7 @@ class _ChatWidgetState extends State<ChatWidget> {
           },
         ),
         title: Text(
-          'Chat on Document - Demo',
+          'Knowledge Base Chat',
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
@@ -90,149 +89,160 @@ class _ChatWidgetState extends State<ChatWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
-                    child: Text(
-                      'Summary of content: ',
-                      style: FlutterFlowTheme.of(context).bodyText1,
+          child: StreamBuilder<ChatsRecord>(
+            stream: ChatsRecord.getDocument(widget.chatRef!),
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child: SpinKitPulse(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      size: 50.0,
                     ),
                   ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
-                child: TextFormField(
-                  controller: _model.contentTextController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: '[Do not put proprietary information]',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedErrorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    filled: true,
-                    fillColor: FlutterFlowTheme.of(context).primaryColor,
-                    contentPadding:
-                        EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyText1,
-                  maxLines: null,
-                  validator: _model.contentTextControllerValidator
-                      .asValidator(context),
-                ),
-              ),
-              Row(
+                );
+              }
+              final columnChatsRecord = snapshot.data!;
+              return Column(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 15.0, 20.0, 10.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        if (FFAppState().session == null ||
-                            FFAppState().session == '') {
-                          // SetRamdomSession
-                          FFAppState().session = random_data.randomString(
-                            10,
-                            10,
-                            true,
-                            true,
-                            true,
+                  Builder(
+                    builder: (context) {
+                      final comment = columnChatsRecord.conversation!.toList();
+                      return Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(comment.length, (commentIndex) {
+                          final commentItem = comment[commentIndex];
+                          return Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                3.0, 3.0, 3.0, 3.0),
+                            child: Text(
+                              commentItem,
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
                           );
-                        }
-                        // CreateFeedbackNlp
-
-                        final nlpsCreateData = createNlpsRecordData(
-                          type: 'content',
-                          content: _model.contentTextController.text,
-                          request: '',
-                          owner: FFAppState().session,
-                        );
-                        var nlpsRecordReference = NlpsRecord.collection.doc();
-                        await nlpsRecordReference.set(nlpsCreateData);
-                        _model.createdContentNlp =
-                            NlpsRecord.getDocumentFromData(
-                                nlpsCreateData, nlpsRecordReference);
-                        await Future.delayed(
-                            const Duration(milliseconds: 6000));
-                        // GotoFeedbacks
-
-                        context.pushNamed(
-                          'Contents',
-                          queryParams: {
-                            'nlp': serializeParam(
-                              _model.createdContentNlp,
-                              ParamType.Document,
-                            ),
-                          }.withoutNulls,
-                          extra: <String, dynamic>{
-                            'nlp': _model.createdContentNlp,
-                          },
-                        );
-
-                        setState(() {});
-                      },
-                      text: 'Get Content',
-                      options: FFButtonOptions(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 20.0, 20.0, 20.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle2
-                            .override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                        }),
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                    child: TextFormField(
+                      controller: _model.userCommentController,
+                      autofocus: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        filled: true,
+                        fillColor: FlutterFlowTheme.of(context).primaryColor,
+                        contentPadding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                       ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      maxLines: null,
+                      validator: _model.userCommentControllerValidator
+                          .asValidator(context),
                     ),
                   ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            20.0, 15.0, 20.0, 10.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            if (FFAppState().session == null ||
+                                FFAppState().session == '') {
+                              // SetRamdomSession
+                              FFAppState().session = random_data.randomString(
+                                10,
+                                10,
+                                true,
+                                true,
+                                true,
+                              );
+                            }
+                            // AddChatComment
+
+                            final chatsUpdateData = {
+                              ...createChatsRecordData(
+                                processed: false,
+                              ),
+                              'conversation': FieldValue.arrayUnion([
+                                'User: ${_model.userCommentController.text}'
+                              ]),
+                            };
+                            await widget.chatRef!.update(chatsUpdateData);
+                            setState(() {
+                              _model.userCommentController?.clear();
+                            });
+                            await Future.delayed(
+                                const Duration(milliseconds: 10000));
+                          },
+                          text: 'Post Question',
+                          options: FFButtonOptions(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 20.0, 20.0, 20.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle2
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),

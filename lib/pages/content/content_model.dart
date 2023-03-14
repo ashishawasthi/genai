@@ -17,6 +17,16 @@ class ContentModel extends FlutterFlowModel {
   // State field(s) for ContentText widget.
   TextEditingController? contentTextController;
   String? Function(BuildContext, String?)? contentTextControllerValidator;
+  // State field(s) for age18to25 widget.
+  bool? age18to25Value;
+  // State field(s) for age25to35 widget.
+  bool? age25to35Value;
+  // State field(s) for age35to50 widget.
+  bool? age35to50Value;
+  // State field(s) for age50to65 widget.
+  bool? age50to65Value;
+  // State field(s) for age65to80 widget.
+  bool? age65to80Value;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   NlpsRecord? createdContentNlp;
 

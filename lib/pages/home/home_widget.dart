@@ -73,9 +73,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Select the function for demo:',
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(8.0, 15.0, 8.0, 8.0),
+                    child: Text(
+                      'Select the function for demo:',
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                    ),
                   ),
                 ],
               ),
@@ -110,7 +114,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
                         context.pushNamed('Pulse');
                       },
-                      text: 'Customer Feedback',
+                      text: 'Customer Feedback Analysis',
                       options: FFButtonOptions(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 20.0),
@@ -127,7 +131,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                   ),
@@ -152,7 +156,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
                         context.pushNamed('Content');
                       },
-                      text: 'Content Rewrite',
+                      text: 'Content Rewrite by Audience',
                       options: FFButtonOptions(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 20.0),
@@ -169,7 +173,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                   ),
@@ -194,7 +198,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
                         context.pushNamed('Fetch');
                       },
-                      text: 'Document Query',
+                      text: 'Knowledge Base Chat',
                       options: FFButtonOptions(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 20.0),
@@ -211,7 +215,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                   ),

@@ -14,18 +14,16 @@ import 'package:provider/provider.dart';
 class ChatModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for ContentText widget.
-  TextEditingController? contentTextController;
-  String? Function(BuildContext, String?)? contentTextControllerValidator;
-  // Stores action output result for [Backend Call - Create Document] action in Button widget.
-  NlpsRecord? createdContentNlp;
+  // State field(s) for UserComment widget.
+  TextEditingController? userCommentController;
+  String? Function(BuildContext, String?)? userCommentControllerValidator;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}
 
   void dispose() {
-    contentTextController?.dispose();
+    userCommentController?.dispose();
   }
 
   /// Additional helper methods are added here.
