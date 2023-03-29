@@ -41,6 +41,8 @@ abstract class NlpsRecord implements Built<NlpsRecord, NlpsRecordBuilder> {
 
   bool? get age65to80;
 
+  BuiltList<String>? get categories;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -59,7 +61,8 @@ abstract class NlpsRecord implements Built<NlpsRecord, NlpsRecordBuilder> {
     ..age25to35 = false
     ..age35to50 = false
     ..age50to65 = false
-    ..age65to80 = false;
+    ..age65to80 = false
+    ..categories = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('nlps');
@@ -117,7 +120,8 @@ Map<String, dynamic> createNlpsRecordData({
         ..age25to35 = age25to35
         ..age35to50 = age35to50
         ..age50to65 = age50to65
-        ..age65to80 = age65to80,
+        ..age65to80 = age65to80
+        ..categories = null,
     ),
   );
 

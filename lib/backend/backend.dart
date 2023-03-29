@@ -11,6 +11,7 @@ import 'schema/feedbacks_record.dart';
 import 'schema/contents_record.dart';
 import 'schema/extracts_record.dart';
 import 'schema/chats_record.dart';
+import 'schema/epics_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -24,6 +25,7 @@ export 'schema/feedbacks_record.dart';
 export 'schema/contents_record.dart';
 export 'schema/extracts_record.dart';
 export 'schema/chats_record.dart';
+export 'schema/epics_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -339,6 +341,58 @@ Future<FFFirestorePage<ChatsRecord>> queryChatsRecordPage({
     queryCollectionPage(
       ChatsRecord.collection(parent),
       ChatsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query EpicsRecords (as a Stream and as a Future).
+Future<int> queryEpicsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      EpicsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<EpicsRecord>> queryEpicsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      EpicsRecord.collection,
+      EpicsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<EpicsRecord>> queryEpicsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      EpicsRecord.collection,
+      EpicsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<EpicsRecord>> queryEpicsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      EpicsRecord.collection,
+      EpicsRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

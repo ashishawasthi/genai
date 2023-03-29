@@ -13,6 +13,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class PulseModel extends FlutterFlowModel {
+  ///  Local state fields for this page.
+
+  bool editingCategories = false;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for Feedback1 widget.
@@ -32,6 +36,30 @@ class PulseModel extends FlutterFlowModel {
   String? Function(BuildContext, String?)? feedback5ControllerValidator;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   NlpsRecord? createdFeedbackNlp;
+  // State field(s) for Cat1 widget.
+  TextEditingController? cat1Controller;
+  String? Function(BuildContext, String?)? cat1ControllerValidator;
+  // State field(s) for Cat2 widget.
+  TextEditingController? cat2Controller;
+  String? Function(BuildContext, String?)? cat2ControllerValidator;
+  // State field(s) for Cat3 widget.
+  TextEditingController? cat3Controller;
+  String? Function(BuildContext, String?)? cat3ControllerValidator;
+  // State field(s) for Cat4 widget.
+  TextEditingController? cat4Controller;
+  String? Function(BuildContext, String?)? cat4ControllerValidator;
+  // State field(s) for Cat5 widget.
+  TextEditingController? cat5Controller;
+  String? Function(BuildContext, String?)? cat5ControllerValidator;
+  // State field(s) for Cat6 widget.
+  TextEditingController? cat6Controller;
+  String? Function(BuildContext, String?)? cat6ControllerValidator;
+  // State field(s) for Cat7 widget.
+  TextEditingController? cat7Controller;
+  String? Function(BuildContext, String?)? cat7ControllerValidator;
+  // State field(s) for Cat8 widget.
+  TextEditingController? cat8Controller;
+  String? Function(BuildContext, String?)? cat8ControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -43,6 +71,14 @@ class PulseModel extends FlutterFlowModel {
     feedback3Controller?.dispose();
     feedback4Controller?.dispose();
     feedback5Controller?.dispose();
+    cat1Controller?.dispose();
+    cat2Controller?.dispose();
+    cat3Controller?.dispose();
+    cat4Controller?.dispose();
+    cat5Controller?.dispose();
+    cat6Controller?.dispose();
+    cat7Controller?.dispose();
+    cat8Controller?.dispose();
   }
 
   /// Additional helper methods are added here.

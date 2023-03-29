@@ -64,7 +64,7 @@ class _FeedbacksWidgetState extends State<FeedbacksWidget> {
           },
         ),
         title: Text(
-          'Feedback Analysis',
+          'Customer Feedback Analysis',
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
@@ -79,237 +79,250 @@ class _FeedbacksWidgetState extends State<FeedbacksWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
-                    child: Text(
-                      '(It takes ~10 seconds to process new feedbacks)',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            fontSize: 10.0,
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            15.0, 15.0, 15.0, 15.0),
-                        child: Text(
-                          'Feedback',
-                          textAlign: TextAlign.center,
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 16.0,
-                                  ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.3,
-                    ),
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                    ),
-                    child: Padding(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           15.0, 15.0, 15.0, 15.0),
                       child: Text(
-                        'Topic',
-                        textAlign: TextAlign.center,
+                        '(It takes ~10 seconds to process new feedbacks)',
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
-                              fontSize: 16.0,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              fontSize: 10.0,
                             ),
                       ),
                     ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          15.0, 15.0, 15.0, 15.0),
-                      child: Text(
-                        'Sentiment',
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 16.0,
-                            ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              StreamBuilder<List<FeedbacksRecord>>(
-                stream: queryFeedbacksRecord(
-                  queryBuilder: (feedbacksRecord) => feedbacksRecord
-                      .where('owner', isEqualTo: FFAppState().session)
-                      .orderBy('created', descending: true),
+                  ],
                 ),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50.0,
-                        height: 50.0,
-                        child: SpinKitPulse(
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context).primaryColor,
-                          size: 50.0,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              15.0, 15.0, 15.0, 15.0),
+                          child: Text(
+                            'Feedback',
+                            textAlign: TextAlign.center,
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 14.0,
+                                    ),
+                          ),
                         ),
                       ),
-                    );
-                  }
-                  List<FeedbacksRecord> listViewFeedbacksRecordList =
-                      snapshot.data!;
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: listViewFeedbacksRecordList.length,
-                    itemBuilder: (context, listViewIndex) {
-                      final listViewFeedbacksRecord =
-                          listViewFeedbacksRecordList[listViewIndex];
-                      return Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
-                        child: Card(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.3,
+                        ),
+                        decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context).primaryColor,
-                          elevation: 2.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              15.0, 15.0, 15.0, 15.0),
+                          child: Text(
+                            'Topics',
+                            textAlign: TextAlign.center,
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 14.0,
+                                    ),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 15.0, 15.0, 15.0),
-                                    child: Text(
-                                      listViewFeedbacksRecord.submission!,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 12.0,
-                                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                StreamBuilder<List<FeedbacksRecord>>(
+                  stream: queryFeedbacksRecord(
+                    queryBuilder: (feedbacksRecord) => feedbacksRecord
+                        .where('owner', isEqualTo: FFAppState().session)
+                        .orderBy('created', descending: true),
+                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: SpinKitPulse(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            size: 50.0,
+                          ),
+                        ),
+                      );
+                    }
+                    List<FeedbacksRecord> listViewFeedbacksRecordList =
+                        snapshot.data!;
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: listViewFeedbacksRecordList.length,
+                      itemBuilder: (context, listViewIndex) {
+                        final listViewFeedbacksRecord =
+                            listViewFeedbacksRecordList[listViewIndex];
+                        return Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              5.0, 5.0, 5.0, 5.0),
+                          child: Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            elevation: 2.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          15.0, 15.0, 15.0, 15.0),
+                                      child: Text(
+                                        listViewFeedbacksRecord.submission!,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 12.0,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Builder(
-                                builder: (context) {
-                                  final anal = listViewFeedbacksRecord.analysis!
-                                      .toList();
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children:
-                                        List.generate(anal.length, (analIndex) {
-                                      final analItem = anal[analIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.3,
-                                            constraints: BoxConstraints(
-                                              maxWidth: MediaQuery.of(context)
+                                Builder(
+                                  builder: (context) {
+                                    final anal = listViewFeedbacksRecord
+                                        .analysis!
+                                        .toList();
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: List.generate(anal.length,
+                                          (analIndex) {
+                                        final analItem = anal[analIndex];
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.3,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      15.0, 5.0, 5.0, 5.0),
-                                              child: Text(
-                                                analItem.topic!,
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 14.0,
-                                                        ),
+                                                  0.35,
+                                              constraints: BoxConstraints(
+                                                maxWidth: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.3,
                                               ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    5.0, 5.0, 15.0, 5.0),
-                                            child: Text(
-                                              analItem.sentiment!.toString(),
-                                              textAlign: TextAlign.center,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        15.0, 5.0, 5.0, 5.0),
+                                                child: Text(
+                                                  analItem.topic!,
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
                                                       .bodyText1
                                                       .override(
                                                         fontFamily: 'Poppins',
                                                         fontSize: 14.0,
                                                       ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                                  );
-                                },
-                              ),
-                            ],
+                                            if (analItem.sentiment! >= 0.0)
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        5.0, 5.0, 15.0, 5.0),
+                                                child: Text(
+                                                  analItem.sentiment!
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color:
+                                                            Color(0xFF59B935),
+                                                        fontSize: 14.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            if (analItem.sentiment! < 0.0)
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        5.0, 5.0, 15.0, 5.0),
+                                                child: Text(
+                                                  analItem.sentiment!
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color:
+                                                            Color(0xFFAC3535),
+                                                        fontSize: 14.0,
+                                                      ),
+                                                ),
+                                              ),
+                                          ],
+                                        );
+                                      }),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

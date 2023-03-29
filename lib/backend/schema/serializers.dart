@@ -7,6 +7,7 @@ import 'feedbacks_record.dart';
 import 'contents_record.dart';
 import 'extracts_record.dart';
 import 'chats_record.dart';
+import 'epics_record.dart';
 
 import 'index.dart';
 
@@ -23,6 +24,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   ContentsRecord,
   ExtractsRecord,
   ChatsRecord,
+  EpicsRecord,
   SentimentStruct,
 ])
 final Serializers serializers = (_$serializers.toBuilder()

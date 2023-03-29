@@ -50,13 +50,6 @@ class _$ExtractsRecordSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.briefed;
-    if (value != null) {
-      result
-        ..add('briefed')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
-    }
     value = object.owner;
     if (value != null) {
       result
@@ -92,6 +85,19 @@ class _$ExtractsRecordSerializer
         ..add('response')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.words;
+    if (value != null) {
+      result
+        ..add('words')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.cached;
+    if (value != null) {
+      result
+        ..add('cached')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -134,10 +140,6 @@ class _$ExtractsRecordSerializer
           result.fetched = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
-        case 'briefed':
-          result.briefed = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
-          break;
         case 'owner':
           result.owner = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -159,6 +161,14 @@ class _$ExtractsRecordSerializer
         case 'response':
           result.response = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'words':
+          result.words = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'cached':
+          result.cached = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -183,8 +193,6 @@ class _$ExtractsRecord extends ExtractsRecord {
   @override
   final bool? fetched;
   @override
-  final bool? briefed;
-  @override
   final String? owner;
   @override
   final DateTime? updated;
@@ -194,6 +202,10 @@ class _$ExtractsRecord extends ExtractsRecord {
   final BuiltList<String>? facts;
   @override
   final String? response;
+  @override
+  final int? words;
+  @override
+  final bool? cached;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -205,12 +217,13 @@ class _$ExtractsRecord extends ExtractsRecord {
       this.clean,
       this.nlpRef,
       this.fetched,
-      this.briefed,
       this.owner,
       this.updated,
       this.summary,
       this.facts,
       this.response,
+      this.words,
+      this.cached,
       this.ffRef})
       : super._();
 
@@ -230,37 +243,33 @@ class _$ExtractsRecord extends ExtractsRecord {
         clean == other.clean &&
         nlpRef == other.nlpRef &&
         fetched == other.fetched &&
-        briefed == other.briefed &&
         owner == other.owner &&
         updated == other.updated &&
         summary == other.summary &&
         facts == other.facts &&
         response == other.response &&
+        words == other.words &&
+        cached == other.cached &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, url.hashCode),
-                                            clean.hashCode),
-                                        nlpRef.hashCode),
-                                    fetched.hashCode),
-                                briefed.hashCode),
-                            owner.hashCode),
-                        updated.hashCode),
-                    summary.hashCode),
-                facts.hashCode),
-            response.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, url.hashCode);
+    _$hash = $jc(_$hash, clean.hashCode);
+    _$hash = $jc(_$hash, nlpRef.hashCode);
+    _$hash = $jc(_$hash, fetched.hashCode);
+    _$hash = $jc(_$hash, owner.hashCode);
+    _$hash = $jc(_$hash, updated.hashCode);
+    _$hash = $jc(_$hash, summary.hashCode);
+    _$hash = $jc(_$hash, facts.hashCode);
+    _$hash = $jc(_$hash, response.hashCode);
+    _$hash = $jc(_$hash, words.hashCode);
+    _$hash = $jc(_$hash, cached.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -270,12 +279,13 @@ class _$ExtractsRecord extends ExtractsRecord {
           ..add('clean', clean)
           ..add('nlpRef', nlpRef)
           ..add('fetched', fetched)
-          ..add('briefed', briefed)
           ..add('owner', owner)
           ..add('updated', updated)
           ..add('summary', summary)
           ..add('facts', facts)
           ..add('response', response)
+          ..add('words', words)
+          ..add('cached', cached)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -301,10 +311,6 @@ class ExtractsRecordBuilder
   bool? get fetched => _$this._fetched;
   set fetched(bool? fetched) => _$this._fetched = fetched;
 
-  bool? _briefed;
-  bool? get briefed => _$this._briefed;
-  set briefed(bool? briefed) => _$this._briefed = briefed;
-
   String? _owner;
   String? get owner => _$this._owner;
   set owner(String? owner) => _$this._owner = owner;
@@ -325,6 +331,14 @@ class ExtractsRecordBuilder
   String? get response => _$this._response;
   set response(String? response) => _$this._response = response;
 
+  int? _words;
+  int? get words => _$this._words;
+  set words(int? words) => _$this._words = words;
+
+  bool? _cached;
+  bool? get cached => _$this._cached;
+  set cached(bool? cached) => _$this._cached = cached;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -340,12 +354,13 @@ class ExtractsRecordBuilder
       _clean = $v.clean;
       _nlpRef = $v.nlpRef;
       _fetched = $v.fetched;
-      _briefed = $v.briefed;
       _owner = $v.owner;
       _updated = $v.updated;
       _summary = $v.summary;
       _facts = $v.facts?.toBuilder();
       _response = $v.response;
+      _words = $v.words;
+      _cached = $v.cached;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -375,12 +390,13 @@ class ExtractsRecordBuilder
               clean: clean,
               nlpRef: nlpRef,
               fetched: fetched,
-              briefed: briefed,
               owner: owner,
               updated: updated,
               summary: summary,
               facts: _facts?.build(),
               response: response,
+              words: words,
+              cached: cached,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
@@ -398,4 +414,4 @@ class ExtractsRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

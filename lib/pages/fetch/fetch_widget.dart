@@ -31,8 +31,9 @@ class _FetchWidgetState extends State<FetchWidget> {
     super.initState();
     _model = createModel(context, () => FetchModel());
 
-    _model.extractController ??=
-        TextEditingController(text: 'https://en.wikipedia.org/wiki/DBS_Bank');
+    _model.extractController ??= TextEditingController(
+        text:
+            'https://www.dbs.com.sg/personal/loans/personal-loans/dbs-personalloan');
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -70,7 +71,7 @@ class _FetchWidgetState extends State<FetchWidget> {
           },
         ),
         title: Text(
-          'Document Processing Demo',
+          'Define Knowledge Base',
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
@@ -92,20 +93,18 @@ class _FetchWidgetState extends State<FetchWidget> {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
                     child: Text(
-                      'Document URL',
+                      'Enter document URL:',
                       style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ),
                 ],
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+                padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                 child: TextFormField(
                   controller: _model.extractController,
                   autofocus: true,
@@ -115,7 +114,7 @@ class _FetchWidgetState extends State<FetchWidget> {
                     hintStyle: FlutterFlowTheme.of(context).bodyText2,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0x00000000),
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
@@ -146,11 +145,70 @@ class _FetchWidgetState extends State<FetchWidget> {
                     contentPadding:
                         EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                   ),
-                  style: FlutterFlowTheme.of(context).bodyText1,
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        fontSize: 14.0,
+                      ),
                   maxLines: null,
                   validator:
                       _model.extractControllerValidator.asValidator(context),
                 ),
+              ),
+              Wrap(
+                spacing: 0.0,
+                runSpacing: 0.0,
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                direction: Axis.horizontal,
+                runAlignment: WrapAlignment.start,
+                verticalDirection: VerticalDirection.down,
+                clipBehavior: Clip.none,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 0.0, 5.0),
+                    child: SelectionArea(
+                        child: Text(
+                      'More examples:',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 12.0,
+                          ),
+                    )),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 2.0, 5.0),
+                    child: SelectionArea(
+                        child: Text(
+                      'https://www.dbs.com.sg/personal/insurance/home-car/home/maid-protect',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 12.0,
+                          ),
+                    )),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 2.0, 5.0),
+                    child: SelectionArea(
+                        child: Text(
+                      'https://en.wikipedia.org/wiki/Singapore',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 12.0,
+                          ),
+                    )),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 2.0, 5.0),
+                    child: SelectionArea(
+                        child: Text(
+                      'https://en.wikipedia.org/wiki/DBS_Bank',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 12.0,
+                          ),
+                    )),
+                  ),
+                ],
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,

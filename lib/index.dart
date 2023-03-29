@@ -9,3 +9,5 @@ export '/pages/content/content_widget.dart' show ContentWidget;
 export '/pages/extract/extract_widget.dart' show ExtractWidget;
 export '/pages/fetch/fetch_widget.dart' show FetchWidget;
 export '/pages/chat/chat_widget.dart' show ChatWidget;
+export '/pages/requirement/requirement_widget.dart' show RequirementWidget;
+export '/pages/stories/stories_widget.dart' show StoriesWidget;

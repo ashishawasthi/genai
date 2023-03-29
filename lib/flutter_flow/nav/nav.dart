@@ -140,6 +140,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 chatRef: params.getParam('chatRef', ParamType.DocumentReference,
                     false, ['extracts', 'chats']),
               ),
+            ),
+            FFRoute(
+              name: 'Requirement',
+              path: 'requirement',
+              builder: (context, params) => RequirementWidget(),
+            ),
+            FFRoute(
+              name: 'Stories',
+              path: 'stories',
+              builder: (context, params) => StoriesWidget(
+                epicRef: params.getParam(
+                    'epicRef', ParamType.DocumentReference, false, ['epics']),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -210,6 +223,7 @@ extension GoRouterExtensions on GoRouter {
           : appState.updateNotifyOnAuthChange(false);
   bool shouldRedirect(bool ignoreRedirect) =>
       !ignoreRedirect && appState.hasRedirect();
+  void clearRedirectLocation() => appState.clearRedirectLocation();
   void setRedirectLocationIfUnset(String location) =>
       (routerDelegate.refreshListenable as AppStateNotifier)
           .updateNotifyOnAuthChange(false);

@@ -10,18 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'content_model.dart';
-export 'content_model.dart';
+import 'requirement_model.dart';
+export 'requirement_model.dart';
 
-class ContentWidget extends StatefulWidget {
-  const ContentWidget({Key? key}) : super(key: key);
+class RequirementWidget extends StatefulWidget {
+  const RequirementWidget({Key? key}) : super(key: key);
 
   @override
-  _ContentWidgetState createState() => _ContentWidgetState();
+  _RequirementWidgetState createState() => _RequirementWidgetState();
 }
 
-class _ContentWidgetState extends State<ContentWidget> {
-  late ContentModel _model;
+class _RequirementWidgetState extends State<RequirementWidget> {
+  late RequirementModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -29,11 +29,11 @@ class _ContentWidgetState extends State<ContentWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ContentModel());
+    _model = createModel(context, () => RequirementModel());
 
-    _model.contentTextController ??= TextEditingController(
+    _model.requirementTextController ??= TextEditingController(
         text:
-            'Get home loan for only 2% interest rate. No processing fee. Free expert guidance.');
+            'A real-time marketing rule engine for a consumer bank, that consumes customer interaction events and market data events from Kafka topics. It should integrate with customer-360 data-lake and marketing automation platform. The engine should be able to process the events in real-time and generate marketing messages to be sent to customers via owned inbound and outbound channels. The engine should be able to handle regulatory requirements and prevent spamming customers. The engine should be able to integrate AI models to predict product-propensity, allowing for monthly iterative upgrades and prioritizing the most relevant products for customers based on revenue expectations. The engine should be able to measure campaign effectiveness using control groups.');
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -71,7 +71,7 @@ class _ContentWidgetState extends State<ContentWidget> {
           },
         ),
         title: Text(
-          'Content to Rewrite ',
+          'Application Requirements',
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
@@ -104,18 +104,17 @@ class _ContentWidgetState extends State<ContentWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
                     child: Text(
-                      'Content: ',
+                      'Requirement Description: ',
                       style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
                     child: TextFormField(
-                      controller: _model.contentTextController,
+                      controller: _model.requirementTextController,
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
-                        hintText: '[Short summary of content]',
                         hintStyle: FlutterFlowTheme.of(context).bodyText2,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -152,114 +151,12 @@ class _ContentWidgetState extends State<ContentWidget> {
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
                       maxLines: null,
-                      validator: _model.contentTextControllerValidator
+                      minLines: 20,
+                      validator: _model.requirementTextControllerValidator
                           .asValidator(context),
                     ),
                   ),
                 ],
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 2.0),
-                child: Wrap(
-                  spacing: 0.0,
-                  runSpacing: 0.0,
-                  alignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  direction: Axis.horizontal,
-                  runAlignment: WrapAlignment.start,
-                  verticalDirection: VerticalDirection.down,
-                  clipBehavior: Clip.none,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
-                      child: Text(
-                        'Demographics to write for: ',
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                    ),
-                    SwitchListTile(
-                      value: _model.age18to25Value ??= true,
-                      onChanged: (newValue) async {
-                        setState(() => _model.age18to25Value = newValue!);
-                      },
-                      title: Text(
-                        'Age 18 to 25, unemployed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 14.0,
-                            ),
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
-                      dense: false,
-                      controlAffinity: ListTileControlAffinity.trailing,
-                    ),
-                    SwitchListTile(
-                      value: _model.age25to35Value ??= true,
-                      onChanged: (newValue) async {
-                        setState(() => _model.age25to35Value = newValue!);
-                      },
-                      title: Text(
-                        'Age 25 to 35, employed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 14.0,
-                            ),
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
-                      dense: false,
-                      controlAffinity: ListTileControlAffinity.trailing,
-                    ),
-                    SwitchListTile(
-                      value: _model.age35to50Value ??= true,
-                      onChanged: (newValue) async {
-                        setState(() => _model.age35to50Value = newValue!);
-                      },
-                      title: Text(
-                        'Age 35 to 50, employed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 14.0,
-                            ),
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
-                      dense: false,
-                      controlAffinity: ListTileControlAffinity.trailing,
-                    ),
-                    SwitchListTile(
-                      value: _model.age50to65Value ??= false,
-                      onChanged: (newValue) async {
-                        setState(() => _model.age50to65Value = newValue!);
-                      },
-                      title: Text(
-                        'Age 50 to 65, employed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 14.0,
-                            ),
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
-                      dense: false,
-                      controlAffinity: ListTileControlAffinity.trailing,
-                    ),
-                    SwitchListTile(
-                      value: _model.age65to80Value ??= false,
-                      onChanged: (newValue) async {
-                        setState(() => _model.age65to80Value = newValue!);
-                      },
-                      title: Text(
-                        'Age 65 to 80, retired, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 14.0,
-                            ),
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
-                      dense: false,
-                      controlAffinity: ListTileControlAffinity.trailing,
-                    ),
-                  ],
-                ),
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,
@@ -283,42 +180,31 @@ class _ContentWidgetState extends State<ContentWidget> {
                         }
                         // CreateFeedbackNlp
 
-                        final nlpsCreateData = createNlpsRecordData(
-                          type: 'content',
-                          content: _model.contentTextController.text,
-                          request: '',
+                        final epicsCreateData = createEpicsRecordData(
                           owner: FFAppState().session,
-                          age18to25: _model.age18to25Value,
-                          age25to35: _model.age25to35Value,
-                          age35to50: _model.age35to50Value,
-                          age50to65: _model.age50to65Value,
-                          age65to80: _model.age65to80Value,
+                          requirement: _model.requirementTextController.text,
+                          processScenarios: false,
                         );
-                        var nlpsRecordReference = NlpsRecord.collection.doc();
-                        await nlpsRecordReference.set(nlpsCreateData);
-                        _model.createdContentNlp =
-                            NlpsRecord.getDocumentFromData(
-                                nlpsCreateData, nlpsRecordReference);
+                        var epicsRecordReference = EpicsRecord.collection.doc();
+                        await epicsRecordReference.set(epicsCreateData);
+                        _model.createdEpic = EpicsRecord.getDocumentFromData(
+                            epicsCreateData, epicsRecordReference);
                         await Future.delayed(
                             const Duration(milliseconds: 6000));
-                        // GotoFeedbacks
 
                         context.pushNamed(
-                          'Contents',
+                          'Stories',
                           queryParams: {
-                            'nlp': serializeParam(
-                              _model.createdContentNlp,
-                              ParamType.Document,
+                            'epicRef': serializeParam(
+                              _model.createdEpic!.reference,
+                              ParamType.DocumentReference,
                             ),
                           }.withoutNulls,
-                          extra: <String, dynamic>{
-                            'nlp': _model.createdContentNlp,
-                          },
                         );
 
                         setState(() {});
                       },
-                      text: 'Rewrite Content',
+                      text: 'Write User Stories',
                       options: FFButtonOptions(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 20.0),
@@ -335,7 +221,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
                   ),

@@ -132,6 +132,14 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.categories;
+    if (value != null) {
+      result
+        ..add('categories')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -220,6 +228,12 @@ class _$NlpsRecordSerializer implements StructuredSerializer<NlpsRecord> {
           result.age65to80 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'categories':
+          result.categories.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -267,6 +281,8 @@ class _$NlpsRecord extends NlpsRecord {
   @override
   final bool? age65to80;
   @override
+  final BuiltList<String>? categories;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$NlpsRecord([void Function(NlpsRecordBuilder)? updates]) =>
@@ -289,6 +305,7 @@ class _$NlpsRecord extends NlpsRecord {
       this.age35to50,
       this.age50to65,
       this.age65to80,
+      this.categories,
       this.ffRef})
       : super._();
 
@@ -319,49 +336,33 @@ class _$NlpsRecord extends NlpsRecord {
         age35to50 == other.age35to50 &&
         age50to65 == other.age50to65 &&
         age65to80 == other.age65to80 &&
+        categories == other.categories &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        0,
-                                                                        owner
-                                                                            .hashCode),
-                                                                    request
-                                                                        .hashCode),
-                                                                created
-                                                                    .hashCode),
-                                                            response.hashCode),
-                                                        updated.hashCode),
-                                                    feedbacks.hashCode),
-                                                chached.hashCode),
-                                            successful.hashCode),
-                                        type.hashCode),
-                                    system.hashCode),
-                                content.hashCode),
-                            age18to25.hashCode),
-                        age25to35.hashCode),
-                    age35to50.hashCode),
-                age50to65.hashCode),
-            age65to80.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, owner.hashCode);
+    _$hash = $jc(_$hash, request.hashCode);
+    _$hash = $jc(_$hash, created.hashCode);
+    _$hash = $jc(_$hash, response.hashCode);
+    _$hash = $jc(_$hash, updated.hashCode);
+    _$hash = $jc(_$hash, feedbacks.hashCode);
+    _$hash = $jc(_$hash, chached.hashCode);
+    _$hash = $jc(_$hash, successful.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, system.hashCode);
+    _$hash = $jc(_$hash, content.hashCode);
+    _$hash = $jc(_$hash, age18to25.hashCode);
+    _$hash = $jc(_$hash, age25to35.hashCode);
+    _$hash = $jc(_$hash, age35to50.hashCode);
+    _$hash = $jc(_$hash, age50to65.hashCode);
+    _$hash = $jc(_$hash, age65to80.hashCode);
+    _$hash = $jc(_$hash, categories.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -383,6 +384,7 @@ class _$NlpsRecord extends NlpsRecord {
           ..add('age35to50', age35to50)
           ..add('age50to65', age50to65)
           ..add('age65to80', age65to80)
+          ..add('categories', categories)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -457,6 +459,12 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
   bool? get age65to80 => _$this._age65to80;
   set age65to80(bool? age65to80) => _$this._age65to80 = age65to80;
 
+  ListBuilder<String>? _categories;
+  ListBuilder<String> get categories =>
+      _$this._categories ??= new ListBuilder<String>();
+  set categories(ListBuilder<String>? categories) =>
+      _$this._categories = categories;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -484,6 +492,7 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
       _age35to50 = $v.age35to50;
       _age50to65 = $v.age50to65;
       _age65to80 = $v.age65to80;
+      _categories = $v.categories?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -525,12 +534,16 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
               age35to50: age35to50,
               age50to65: age50to65,
               age65to80: age65to80,
+              categories: _categories?.build(),
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'feedbacks';
         _feedbacks?.build();
+
+        _$failedField = 'categories';
+        _categories?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'NlpsRecord', _$failedField, e.toString());
@@ -542,4 +555,4 @@ class NlpsRecordBuilder implements Builder<NlpsRecord, NlpsRecordBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint
