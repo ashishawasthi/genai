@@ -42,28 +42,28 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Generative AI Demo',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22.0,
-              ),
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Generative AI Demo',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Poppins',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 2.0,
         ),
-        actions: [],
-        centerTitle: true,
-        elevation: 2.0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -79,7 +79,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           EdgeInsetsDirectional.fromSTEB(8.0, 20.0, 8.0, 8.0),
                       child: Text(
                         'Pick a generative AI capability for demo:',
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                       ),
                     ),
                   ],
@@ -112,7 +112,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               child: Text(
                                 'Application Design Capability',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w600,
@@ -124,7 +124,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   8.0, 8.0, 8.0, 8.0),
                               child: Text(
                                 'Create user-stories & test-scenarios from requirements provided by users',
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                               ),
                             ),
                             Padding(
@@ -155,15 +155,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       20.0, 20.0, 20.0, 20.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: 'Poppins',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                       ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
@@ -194,7 +194,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               child: Text(
                                 'Interactive Interface Capability',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w600,
@@ -206,7 +206,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   8.0, 8.0, 8.0, 8.0),
                               child: Text(
                                 'Chatbot for questions on a given knowledge base (e.g. URLs, Confluence, files)',
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                               ),
                             ),
                             Padding(
@@ -237,15 +237,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       20.0, 20.0, 20.0, 20.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: 'Poppins',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                       ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
@@ -276,7 +276,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               child: Text(
                                 'Content Creation Capability',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w600,
@@ -288,7 +288,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   8.0, 8.0, 8.0, 8.0),
                               child: Text(
                                 'Rewrite text content for customer segments (e.g. demographics, risk-profiles)',
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                               ),
                             ),
                             Padding(
@@ -319,15 +319,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       20.0, 20.0, 20.0, 20.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: 'Poppins',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                       ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
@@ -358,7 +358,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               child: Text(
                                 'Language Understanding Capability',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w600,
@@ -370,7 +370,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   8.0, 8.0, 8.0, 8.0),
                               child: Text(
                                 'Analyze user defined topics in customer feedback (e.g. App Store, Twitter)',
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                               ),
                             ),
                             Padding(
@@ -401,15 +401,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       20.0, 20.0, 20.0, 20.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: 'Poppins',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                       ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,

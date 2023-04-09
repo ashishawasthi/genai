@@ -33,7 +33,7 @@ class _RequirementWidgetState extends State<RequirementWidget> {
 
     _model.requirementTextController ??= TextEditingController(
         text:
-            'A real-time marketing rule engine for a consumer bank, that consumes customer interaction events and market data events from Kafka topics. It should integrate with customer-360 data-lake and marketing automation platform. The engine should be able to process the events in real-time and generate marketing messages to be sent to customers via owned inbound and outbound channels. The engine should be able to handle regulatory requirements and prevent spamming customers. The engine should be able to integrate AI models to predict product-propensity, allowing for monthly iterative upgrades and prioritizing the most relevant products for customers based on revenue expectations. The engine should be able to measure campaign effectiveness using control groups.');
+            'An interface for relationship managers to get personalized conversation suggestions based on customer profiles, recent interactions, and usage of products and services. Marketing users should be able to define customer segment-based templates for product offers. The system must comply with regulatory requirements, including configurable frequency caps for conversations. AI models predicting product-propensity should be integrated, with iterative monthly upgrades prioritizing the most relevant products for customers based on revenue expectations. Relationship managers must have the ability to provide feedback on system suggestions, allowing for model improvements. Data engineers should be able to integrate the system with any customer data in the data lake seamlessly.');
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -49,185 +49,191 @@ class _RequirementWidgetState extends State<RequirementWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          fillColor: FlutterFlowTheme.of(context).primaryColor,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30.0,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            fillColor: FlutterFlowTheme.of(context).primary,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          title: Text(
+            'Application Requirements',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Poppins',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 2.0,
         ),
-        title: Text(
-          'Application Requirements',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22.0,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 2.0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Wrap(
-                spacing: 0.0,
-                runSpacing: 0.0,
-                alignment: WrapAlignment.start,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                direction: Axis.horizontal,
-                runAlignment: WrapAlignment.start,
-                verticalDirection: VerticalDirection.down,
-                clipBehavior: Clip.none,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
-                    child: Text(
-                      'Requirement Description: ',
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
-                    child: TextFormField(
-                      controller: _model.requirementTextController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        filled: true,
-                        fillColor: FlutterFlowTheme.of(context).primaryColor,
-                        contentPadding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Wrap(
+                  spacing: 0.0,
+                  runSpacing: 0.0,
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  direction: Axis.horizontal,
+                  runAlignment: WrapAlignment.start,
+                  verticalDirection: VerticalDirection.down,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
+                      child: Text(
+                        'Requirement Description: ',
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      maxLines: null,
-                      minLines: 20,
-                      validator: _model.requirementTextControllerValidator
-                          .asValidator(context),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 15.0, 20.0, 10.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        if (FFAppState().session == null ||
-                            FFAppState().session == '') {
-                          // SetRamdomSession
-                          FFAppState().session = random_data.randomString(
-                            10,
-                            10,
-                            true,
-                            true,
-                            true,
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
+                      child: TextFormField(
+                        controller: _model.requirementTextController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).tertiary,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          filled: true,
+                          fillColor: FlutterFlowTheme.of(context).primary,
+                          contentPadding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 8.0, 8.0, 8.0),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        maxLines: null,
+                        minLines: 20,
+                        validator: _model.requirementTextControllerValidator
+                            .asValidator(context),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          20.0, 15.0, 20.0, 10.0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          if (FFAppState().session == null ||
+                              FFAppState().session == '') {
+                            // SetRamdomSession
+                            FFAppState().session = random_data.randomString(
+                              10,
+                              10,
+                              true,
+                              true,
+                              true,
+                            );
+                          }
+                          // CreateFeedbackNlp
+
+                          final epicsCreateData = createEpicsRecordData(
+                            owner: FFAppState().session,
+                            requirement: _model.requirementTextController.text,
+                            processScenarios: false,
                           );
-                        }
-                        // CreateFeedbackNlp
+                          var epicsRecordReference =
+                              EpicsRecord.collection.doc();
+                          await epicsRecordReference.set(epicsCreateData);
+                          _model.createdEpic = EpicsRecord.getDocumentFromData(
+                              epicsCreateData, epicsRecordReference);
+                          await Future.delayed(
+                              const Duration(milliseconds: 6000));
 
-                        final epicsCreateData = createEpicsRecordData(
-                          owner: FFAppState().session,
-                          requirement: _model.requirementTextController.text,
-                          processScenarios: false,
-                        );
-                        var epicsRecordReference = EpicsRecord.collection.doc();
-                        await epicsRecordReference.set(epicsCreateData);
-                        _model.createdEpic = EpicsRecord.getDocumentFromData(
-                            epicsCreateData, epicsRecordReference);
-                        await Future.delayed(
-                            const Duration(milliseconds: 6000));
+                          context.pushNamed(
+                            'Stories',
+                            queryParams: {
+                              'epicRef': serializeParam(
+                                _model.createdEpic!.reference,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                          );
 
-                        context.pushNamed(
-                          'Stories',
-                          queryParams: {
-                            'epicRef': serializeParam(
-                              _model.createdEpic!.reference,
-                              ParamType.DocumentReference,
-                            ),
-                          }.withoutNulls,
-                        );
-
-                        setState(() {});
-                      },
-                      text: 'Write User Stories',
-                      options: FFButtonOptions(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 20.0, 20.0, 20.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle2
-                            .override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                          setState(() {});
+                        },
+                        text: 'Write User Stories',
+                        options: FFButtonOptions(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              20.0, 20.0, 20.0, 20.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Poppins',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                          elevation: 2.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(25.0),
                         ),
-                        borderRadius: BorderRadius.circular(25.0),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

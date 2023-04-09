@@ -12,6 +12,7 @@ import 'schema/contents_record.dart';
 import 'schema/extracts_record.dart';
 import 'schema/chats_record.dart';
 import 'schema/epics_record.dart';
+import 'schema/stories_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -26,6 +27,7 @@ export 'schema/contents_record.dart';
 export 'schema/extracts_record.dart';
 export 'schema/chats_record.dart';
 export 'schema/epics_record.dart';
+export 'schema/stories_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -393,6 +395,62 @@ Future<FFFirestorePage<EpicsRecord>> queryEpicsRecordPage({
     queryCollectionPage(
       EpicsRecord.collection,
       EpicsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query StoriesRecords (as a Stream and as a Future).
+Future<int> queryStoriesRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      StoriesRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<StoriesRecord>> queryStoriesRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      StoriesRecord.collection(parent),
+      StoriesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<StoriesRecord>> queryStoriesRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      StoriesRecord.collection(parent),
+      StoriesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<StoriesRecord>> queryStoriesRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      StoriesRecord.collection(parent),
+      StoriesRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

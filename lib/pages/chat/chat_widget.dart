@@ -61,43 +61,43 @@ class _ChatWidgetState extends State<ChatWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          fillColor: FlutterFlowTheme.of(context).primaryColor,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30.0,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            fillColor: FlutterFlowTheme.of(context).primary,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          title: Text(
+            'Knowledge Base Chat',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Poppins',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 2.0,
         ),
-        title: Text(
-          'Knowledge Base Chat',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22.0,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 2.0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: StreamBuilder<ChatsRecord>(
             stream: ChatsRecord.getDocument(widget.chatRef!),
             builder: (context, snapshot) {
@@ -108,7 +108,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                     width: 50.0,
                     height: 50.0,
                     child: SpinKitPulse(
-                      color: FlutterFlowTheme.of(context).primaryColor,
+                      color: FlutterFlowTheme.of(context).primary,
                       size: 50.0,
                     ),
                   ),
@@ -138,7 +138,8 @@ class _ChatWidgetState extends State<ChatWidget> {
                                 child: Text(
                                   commentItem,
                                   textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                               );
                             }),
@@ -154,10 +155,10 @@ class _ChatWidgetState extends State<ChatWidget> {
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              color: FlutterFlowTheme.of(context).tertiary,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -184,11 +185,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
-                          fillColor: FlutterFlowTheme.of(context).primaryColor,
+                          fillColor: FlutterFlowTheme.of(context).primary,
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 8.0, 8.0, 8.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         maxLines: null,
                         validator: _model.userCommentControllerValidator
                             .asValidator(context),
@@ -210,11 +211,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                           child: SelectionArea(
                               child: Text(
                             'More examples:',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12.0,
-                                    ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12.0,
+                                ),
                           )),
                         ),
                         Padding(
@@ -223,11 +225,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                           child: SelectionArea(
                               child: Text(
                             ' What is the interest rate offered?',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12.0,
-                                    ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12.0,
+                                ),
                           )),
                         ),
                         Padding(
@@ -236,11 +239,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                           child: SelectionArea(
                               child: Text(
                             'What are available repayment tenure?',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12.0,
-                                    ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12.0,
+                                ),
                           )),
                         ),
                         Padding(
@@ -249,11 +253,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                           child: SelectionArea(
                               child: Text(
                             'What is the processing fee?',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12.0,
-                                    ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12.0,
+                                ),
                           )),
                         ),
                         Padding(
@@ -262,11 +267,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                           child: SelectionArea(
                               child: Text(
                             'What to expect after applying for a loan?',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12.0,
-                                    ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12.0,
+                                ),
                           )),
                         ),
                       ],
@@ -314,14 +320,15 @@ class _ChatWidgetState extends State<ChatWidget> {
                                   20.0, 20.0, 20.0, 20.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .titleSmall
                                   .override(
                                     fontFamily: 'Poppins',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                   ),
+                              elevation: 2.0,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,

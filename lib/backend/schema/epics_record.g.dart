@@ -47,14 +47,6 @@ class _$EpicsRecordSerializer implements StructuredSerializer<EpicsRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.stories;
-    if (value != null) {
-      result
-        ..add('stories')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
-    }
     value = object.testScenarios;
     if (value != null) {
       result
@@ -107,12 +99,6 @@ class _$EpicsRecordSerializer implements StructuredSerializer<EpicsRecord> {
           result.response = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'stories':
-          result.stories.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
-          break;
         case 'testScenarios':
           result.testScenarios = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -144,8 +130,6 @@ class _$EpicsRecord extends EpicsRecord {
   @override
   final String? response;
   @override
-  final BuiltList<String>? stories;
-  @override
   final String? testScenarios;
   @override
   final bool? processScenarios;
@@ -160,7 +144,6 @@ class _$EpicsRecord extends EpicsRecord {
       this.cached,
       this.requirement,
       this.response,
-      this.stories,
       this.testScenarios,
       this.processScenarios,
       this.ffRef})
@@ -181,7 +164,6 @@ class _$EpicsRecord extends EpicsRecord {
         cached == other.cached &&
         requirement == other.requirement &&
         response == other.response &&
-        stories == other.stories &&
         testScenarios == other.testScenarios &&
         processScenarios == other.processScenarios &&
         ffRef == other.ffRef;
@@ -194,7 +176,6 @@ class _$EpicsRecord extends EpicsRecord {
     _$hash = $jc(_$hash, cached.hashCode);
     _$hash = $jc(_$hash, requirement.hashCode);
     _$hash = $jc(_$hash, response.hashCode);
-    _$hash = $jc(_$hash, stories.hashCode);
     _$hash = $jc(_$hash, testScenarios.hashCode);
     _$hash = $jc(_$hash, processScenarios.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
@@ -209,7 +190,6 @@ class _$EpicsRecord extends EpicsRecord {
           ..add('cached', cached)
           ..add('requirement', requirement)
           ..add('response', response)
-          ..add('stories', stories)
           ..add('testScenarios', testScenarios)
           ..add('processScenarios', processScenarios)
           ..add('ffRef', ffRef))
@@ -236,11 +216,6 @@ class EpicsRecordBuilder implements Builder<EpicsRecord, EpicsRecordBuilder> {
   String? get response => _$this._response;
   set response(String? response) => _$this._response = response;
 
-  ListBuilder<String>? _stories;
-  ListBuilder<String> get stories =>
-      _$this._stories ??= new ListBuilder<String>();
-  set stories(ListBuilder<String>? stories) => _$this._stories = stories;
-
   String? _testScenarios;
   String? get testScenarios => _$this._testScenarios;
   set testScenarios(String? testScenarios) =>
@@ -266,7 +241,6 @@ class EpicsRecordBuilder implements Builder<EpicsRecord, EpicsRecordBuilder> {
       _cached = $v.cached;
       _requirement = $v.requirement;
       _response = $v.response;
-      _stories = $v.stories?.toBuilder();
       _testScenarios = $v.testScenarios;
       _processScenarios = $v.processScenarios;
       _ffRef = $v.ffRef;
@@ -290,29 +264,15 @@ class EpicsRecordBuilder implements Builder<EpicsRecord, EpicsRecordBuilder> {
   EpicsRecord build() => _build();
 
   _$EpicsRecord _build() {
-    _$EpicsRecord _$result;
-    try {
-      _$result = _$v ??
-          new _$EpicsRecord._(
-              owner: owner,
-              cached: cached,
-              requirement: requirement,
-              response: response,
-              stories: _stories?.build(),
-              testScenarios: testScenarios,
-              processScenarios: processScenarios,
-              ffRef: ffRef);
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'stories';
-        _stories?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'EpicsRecord', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$EpicsRecord._(
+            owner: owner,
+            cached: cached,
+            requirement: requirement,
+            response: response,
+            testScenarios: testScenarios,
+            processScenarios: processScenarios,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

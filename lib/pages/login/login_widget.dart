@@ -64,18 +64,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
-                        height: 50.0,
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context).primaryBackground,
                         ),
                         alignment: AlignmentDirectional(-1.0, 0.0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 16.0, 0.0),
-                          child: Text(
-                            'Sign In',
-                            style: FlutterFlowTheme.of(context).title1,
-                          ),
+                        child: Text(
+                          'Sign In',
+                          style: FlutterFlowTheme.of(context).displaySmall,
                         ),
                       ),
                     ],
@@ -88,7 +83,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     children: [
                       Text(
                         'Use the form below, to access your account.',
-                        style: FlutterFlowTheme.of(context).bodyText2,
+                        style: FlutterFlowTheme.of(context).bodySmall,
                       ),
                     ],
                   ),
@@ -116,8 +111,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Your email address',
-                          labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          labelStyle: FlutterFlowTheme.of(context).bodySmall,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -152,7 +147,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 24.0, 20.0, 24.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         maxLines: null,
                         validator: _model.emailTextControllerValidator
                             .asValidator(context),
@@ -183,8 +178,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                         obscureText: !_model.passwordVisibility,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          labelStyle: FlutterFlowTheme.of(context).bodySmall,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -233,7 +228,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         validator: _model.passwordTextControllerValidator
                             .asValidator(context),
                       ),
@@ -260,7 +255,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primaryBackground,
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: 'Poppins',
                                 color: FlutterFlowTheme.of(context).primaryText,
@@ -296,9 +291,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle1
+                              .titleMedium
                               .override(
                                 fontFamily: 'Poppins',
                                 color: FlutterFlowTheme.of(context).primaryText,
@@ -342,7 +337,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            textStyle: FlutterFlowTheme.of(context).subtitle2,
+                            textStyle: FlutterFlowTheme.of(context).titleSmall,
                             elevation: 0.0,
                             borderSide: BorderSide(
                               color: Colors.transparent,

@@ -17,8 +17,6 @@ abstract class EpicsRecord implements Built<EpicsRecord, EpicsRecordBuilder> {
 
   String? get response;
 
-  BuiltList<String>? get stories;
-
   String? get testScenarios;
 
   bool? get processScenarios;
@@ -32,7 +30,6 @@ abstract class EpicsRecord implements Built<EpicsRecord, EpicsRecordBuilder> {
     ..cached = false
     ..requirement = ''
     ..response = ''
-    ..stories = ListBuilder()
     ..testScenarios = ''
     ..processScenarios = false;
 
@@ -73,7 +70,6 @@ Map<String, dynamic> createEpicsRecordData({
         ..cached = cached
         ..requirement = requirement
         ..response = response
-        ..stories = null
         ..testScenarios = testScenarios
         ..processScenarios = processScenarios,
     ),

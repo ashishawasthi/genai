@@ -69,43 +69,43 @@ class _PulseWidgetState extends State<PulseWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          fillColor: FlutterFlowTheme.of(context).primaryColor,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30.0,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            fillColor: FlutterFlowTheme.of(context).primary,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          title: Text(
+            'Feedbacks and Categories',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Poppins',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 2.0,
         ),
-        title: Text(
-          'Feedbacks and Categories',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22.0,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 2.0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: Stack(
             children: [
               SingleChildScrollView(
@@ -123,7 +123,7 @@ class _PulseWidgetState extends State<PulseWidget> {
                               15.0, 15.0, 15.0, 15.0),
                           child: Text(
                             'Manage feedback categories',
-                            style: FlutterFlowTheme.of(context).bodyText1,
+                            style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
                         ),
                         Padding(
@@ -153,7 +153,7 @@ class _PulseWidgetState extends State<PulseWidget> {
                               15.0, 15.0, 15.0, 15.0),
                           child: Text(
                             'Enter feedbacks to analyze:',
-                            style: FlutterFlowTheme.of(context).bodyText1,
+                            style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
                         ),
                       ],
@@ -167,10 +167,10 @@ class _PulseWidgetState extends State<PulseWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: '[Do not put proprietary information]',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              color: FlutterFlowTheme.of(context).tertiary,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -197,11 +197,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
-                          fillColor: FlutterFlowTheme.of(context).primaryColor,
+                          fillColor: FlutterFlowTheme.of(context).primary,
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 8.0, 8.0, 8.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         maxLines: null,
                         validator: _model.feedback1ControllerValidator
                             .asValidator(context),
@@ -216,10 +216,10 @@ class _PulseWidgetState extends State<PulseWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: '[Do not put proprietary information]',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              color: FlutterFlowTheme.of(context).tertiary,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -246,11 +246,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
-                          fillColor: FlutterFlowTheme.of(context).primaryColor,
+                          fillColor: FlutterFlowTheme.of(context).primary,
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 8.0, 8.0, 8.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         maxLines: null,
                         validator: _model.feedback2ControllerValidator
                             .asValidator(context),
@@ -265,10 +265,10 @@ class _PulseWidgetState extends State<PulseWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: '[Do not put proprietary information]',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              color: FlutterFlowTheme.of(context).tertiary,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -295,11 +295,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
-                          fillColor: FlutterFlowTheme.of(context).primaryColor,
+                          fillColor: FlutterFlowTheme.of(context).primary,
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 8.0, 8.0, 8.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         maxLines: null,
                         validator: _model.feedback3ControllerValidator
                             .asValidator(context),
@@ -314,10 +314,10 @@ class _PulseWidgetState extends State<PulseWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: '[Do not put proprietary information]',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              color: FlutterFlowTheme.of(context).tertiary,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -344,11 +344,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
-                          fillColor: FlutterFlowTheme.of(context).primaryColor,
+                          fillColor: FlutterFlowTheme.of(context).primary,
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 8.0, 8.0, 8.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         maxLines: null,
                         validator: _model.feedback4ControllerValidator
                             .asValidator(context),
@@ -363,10 +363,10 @@ class _PulseWidgetState extends State<PulseWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: '[Do not put proprietary information]',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              color: FlutterFlowTheme.of(context).tertiary,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -393,11 +393,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
-                          fillColor: FlutterFlowTheme.of(context).primaryColor,
+                          fillColor: FlutterFlowTheme.of(context).primary,
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 8.0, 8.0, 8.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                         maxLines: null,
                         validator: _model.feedback5ControllerValidator
                             .asValidator(context),
@@ -470,14 +470,15 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   25.0, 25.0, 25.0, 25.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .titleSmall
                                   .override(
                                     fontFamily: 'Poppins',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                   ),
+                              elevation: 2.0,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
@@ -523,7 +524,8 @@ class _PulseWidgetState extends State<PulseWidget> {
                                     5.0, 5.0, 5.0, 5.0),
                                 child: Text(
                                   'Manage feedback categories:',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                               ),
                               Padding(
@@ -555,11 +557,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -599,9 +601,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat1ControllerValidator
                                     .asValidator(context),
                               ),
@@ -618,11 +620,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -662,9 +664,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat2ControllerValidator
                                     .asValidator(context),
                               ),
@@ -681,11 +683,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -725,9 +727,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat3ControllerValidator
                                     .asValidator(context),
                               ),
@@ -744,11 +746,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -788,9 +790,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat4ControllerValidator
                                     .asValidator(context),
                               ),
@@ -807,11 +809,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -851,9 +853,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat5ControllerValidator
                                     .asValidator(context),
                               ),
@@ -870,11 +872,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -914,9 +916,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat6ControllerValidator
                                     .asValidator(context),
                               ),
@@ -933,11 +935,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -977,9 +979,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat7ControllerValidator
                                     .asValidator(context),
                               ),
@@ -996,11 +998,11 @@ class _PulseWidgetState extends State<PulseWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -1040,9 +1042,9 @@ class _PulseWidgetState extends State<PulseWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 validator: _model.cat8ControllerValidator
                                     .asValidator(context),
                               ),

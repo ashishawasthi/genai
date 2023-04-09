@@ -59,43 +59,43 @@ class _StoriesWidgetState extends State<StoriesWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          fillColor: FlutterFlowTheme.of(context).primaryColor,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30.0,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            fillColor: FlutterFlowTheme.of(context).primary,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          title: Text(
+            'Stories & Scenarios',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Poppins',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 2.0,
         ),
-        title: Text(
-          'Stories & Scenarios',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22.0,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 2.0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: StreamBuilder<EpicsRecord>(
             stream: EpicsRecord.getDocument(widget.epicRef!),
             builder: (context, snapshot) {
@@ -106,7 +106,7 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                     width: 50.0,
                     height: 50.0,
                     child: SpinKitPulse(
-                      color: FlutterFlowTheme.of(context).primaryColor,
+                      color: FlutterFlowTheme.of(context).primary,
                       size: 50.0,
                     ),
                   ),
@@ -121,61 +121,57 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            if (stackEpicsRecord.stories!.toList().length > 0)
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    15.0, 15.0, 15.0, 15.0),
-                                child: Text(
-                                  'User Stories:',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              15.0, 15.0, 15.0, 15.0),
+                          child: Text(
+                            '(Please wait, It may take ~10 seconds to process)',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontSize: 12.0,
                                 ),
-                              ),
-                            if (stackEpicsRecord.stories!.toList().length == 0)
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    15.0, 15.0, 15.0, 15.0),
-                                child: Text(
-                                  'Please wait, It may take ~10 seconds to process',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 14.0,
-                                      ),
-                                ),
-                              ),
-                          ],
+                          ),
                         ),
-                        Builder(
-                          builder: (context) {
-                            final story = stackEpicsRecord.stories!.toList();
+                        StreamBuilder<List<StoriesRecord>>(
+                          stream: queryStoriesRecord(
+                            parent: stackEpicsRecord.reference,
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: SpinKitPulse(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 50.0,
+                                  ),
+                                ),
+                              );
+                            }
+                            List<StoriesRecord> columnStoriesRecordList =
+                                snapshot.data!;
                             return SingleChildScrollView(
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
-                                children:
-                                    List.generate(story.length, (storyIndex) {
-                                  final storyItem = story[storyIndex];
+                                children: List.generate(
+                                    columnStoriesRecordList.length,
+                                    (columnIndex) {
+                                  final columnStoriesRecord =
+                                      columnStoriesRecordList[columnIndex];
                                   return Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         5.0, 5.0, 5.0, 5.0),
                                     child: Card(
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       elevation: 2.0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -183,6 +179,8 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                       ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding:
@@ -190,40 +188,72 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                                     8.0, 8.0, 8.0, 2.0),
                                             child: SelectionArea(
                                                 child: Text(
-                                              storyItem,
+                                              columnStoriesRecord.description!,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Poppins',
                                                         fontSize: 14.0,
                                                       ),
                                             )),
                                           ),
-                                          if (currentUserEmailVerified)
-                                            AuthUserStreamWidget(
-                                              builder: (context) => InkWell(
-                                                onTap: () async {
-                                                  final epicsUpdateData = {
-                                                    'stories':
-                                                        FieldValue.arrayRemove(
-                                                            [storyItem]),
-                                                  };
-                                                  await widget.epicRef!
-                                                      .update(epicsUpdateData);
-                                                  await Future.delayed(
-                                                      const Duration(
-                                                          milliseconds: 500));
-                                                },
-                                                child: Icon(
-                                                  Icons.delete_outline,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  size: 12.0,
-                                                ),
-                                              ),
-                                            ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5.0, 12.0, 5.0, 2.0),
+                                            child: SelectionArea(
+                                                child: Text(
+                                              'Dependencies:',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 14.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                            )),
+                                          ),
+                                          Builder(
+                                            builder: (context) {
+                                              final dependency =
+                                                  columnStoriesRecord
+                                                      .dependencies!
+                                                      .toList();
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: List.generate(
+                                                    dependency.length,
+                                                    (dependencyIndex) {
+                                                  final dependencyItem =
+                                                      dependency[
+                                                          dependencyIndex];
+                                                  return Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(5.0, 5.0,
+                                                                5.0, 5.0),
+                                                    child: Text(
+                                                      dependencyItem,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize: 14.0,
+                                                              ),
+                                                    ),
+                                                  );
+                                                }),
+                                              );
+                                            },
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -243,80 +273,70 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                           verticalDirection: VerticalDirection.down,
                           clipBehavior: Clip.none,
                           children: [
-                            Visibility(
-                              visible:
-                                  stackEpicsRecord.stories!.toList().length > 0,
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 15.0, 20.0, 10.0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    setState(() {
-                                      _model.addingStory = true;
-                                    });
-                                  },
-                                  text: 'Add a User Story',
-                                  options: FFButtonOptions(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 20.0, 20.0, 20.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(25.0),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 15.0, 20.0, 10.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() {
+                                    _model.addingStory = true;
+                                  });
+                                },
+                                text: 'Add a User Story',
+                                options: FFButtonOptions(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                  elevation: 2.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
                                   ),
+                                  borderRadius: BorderRadius.circular(25.0),
                                 ),
                               ),
                             ),
-                            Visibility(
-                              visible:
-                                  stackEpicsRecord.stories!.toList().length > 0,
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 15.0, 20.0, 10.0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    final epicsUpdateData =
-                                        createEpicsRecordData(
-                                      processScenarios: true,
-                                    );
-                                    await widget.epicRef!
-                                        .update(epicsUpdateData);
-                                    await Future.delayed(
-                                        const Duration(milliseconds: 20000));
-                                  },
-                                  text: '(Re)write Test Scenarios',
-                                  options: FFButtonOptions(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 20.0, 20.0, 20.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(25.0),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 15.0, 20.0, 10.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  final epicsUpdateData = createEpicsRecordData(
+                                    processScenarios: true,
+                                  );
+                                  await widget.epicRef!.update(epicsUpdateData);
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 20000));
+                                },
+                                text: '(Re)write Test Scenarios',
+                                options: FFButtonOptions(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                  elevation: 2.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
                                   ),
+                                  borderRadius: BorderRadius.circular(25.0),
                                 ),
                               ),
                             ),
@@ -326,7 +346,7 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                             stackEpicsRecord.testScenarios != '')
                           Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme.of(context).primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
@@ -337,7 +357,7 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                   child: Text(
                                 stackEpicsRecord.testScenarios!,
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Poppins',
                                       fontSize: 14.0,
@@ -372,7 +392,7 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                   child: Text(
                                     'New user story:',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Poppins',
                                           fontSize: 14.0,
@@ -406,11 +426,11 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
+                                      FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -450,9 +470,9 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                   ),
                                   filled: true,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                                 maxLines: null,
                                 minLines: 15,
                                 validator: _model.storyControllerValidator
@@ -478,20 +498,11 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                         duration: Duration(milliseconds: 4000),
                                         backgroundColor:
                                             FlutterFlowTheme.of(context)
-                                                .secondaryColor,
+                                                .secondary,
                                       ),
                                     );
                                     return;
                                   }
-
-                                  final epicsUpdateData = {
-                                    'stories': FieldValue.arrayUnion(
-                                        [_model.storyController.text]),
-                                  };
-                                  await stackEpicsRecord.reference
-                                      .update(epicsUpdateData);
-                                  await Future.delayed(
-                                      const Duration(milliseconds: 500));
                                   setState(() {
                                     _model.addingStory = false;
                                   });
@@ -502,15 +513,15 @@ class _StoriesWidgetState extends State<StoriesWidget> {
                                       20.0, 20.0, 20.0, 20.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: 'Poppins',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                       ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,

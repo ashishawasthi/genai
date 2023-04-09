@@ -49,43 +49,43 @@ class _ContentWidgetState extends State<ContentWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          fillColor: FlutterFlowTheme.of(context).primaryColor,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30.0,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            fillColor: FlutterFlowTheme.of(context).primary,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          title: Text(
+            'Content to Rewrite ',
+            textAlign: TextAlign.center,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Poppins',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 2.0,
         ),
-        title: Text(
-          'Content to Rewrite ',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22.0,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 2.0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -105,7 +105,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
                     child: Text(
                       'Content: ',
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyMedium,
                     ),
                   ),
                   Padding(
@@ -116,10 +116,10 @@ class _ContentWidgetState extends State<ContentWidget> {
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: '[Short summary of content]',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        hintStyle: FlutterFlowTheme.of(context).bodySmall,
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
+                            color: FlutterFlowTheme.of(context).tertiary,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
@@ -146,11 +146,11 @@ class _ContentWidgetState extends State<ContentWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         filled: true,
-                        fillColor: FlutterFlowTheme.of(context).primaryColor,
+                        fillColor: FlutterFlowTheme.of(context).primary,
                         contentPadding:
                             EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyMedium,
                       maxLines: null,
                       validator: _model.contentTextControllerValidator
                           .asValidator(context),
@@ -175,7 +175,7 @@ class _ContentWidgetState extends State<ContentWidget> {
                           EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
                       child: Text(
                         'Demographics to write for: ',
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyMedium,
                       ),
                     ),
                     SwitchListTile(
@@ -185,12 +185,12 @@ class _ContentWidgetState extends State<ContentWidget> {
                       },
                       title: Text(
                         'Age 18 to 25, unemployed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Poppins',
                               fontSize: 14.0,
                             ),
                       ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      tileColor: FlutterFlowTheme.of(context).primary,
                       dense: false,
                       controlAffinity: ListTileControlAffinity.trailing,
                     ),
@@ -201,12 +201,12 @@ class _ContentWidgetState extends State<ContentWidget> {
                       },
                       title: Text(
                         'Age 25 to 35, employed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Poppins',
                               fontSize: 14.0,
                             ),
                       ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      tileColor: FlutterFlowTheme.of(context).primary,
                       dense: false,
                       controlAffinity: ListTileControlAffinity.trailing,
                     ),
@@ -217,12 +217,12 @@ class _ContentWidgetState extends State<ContentWidget> {
                       },
                       title: Text(
                         'Age 35 to 50, employed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Poppins',
                               fontSize: 14.0,
                             ),
                       ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      tileColor: FlutterFlowTheme.of(context).primary,
                       dense: false,
                       controlAffinity: ListTileControlAffinity.trailing,
                     ),
@@ -233,12 +233,12 @@ class _ContentWidgetState extends State<ContentWidget> {
                       },
                       title: Text(
                         'Age 50 to 65, employed, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Poppins',
                               fontSize: 14.0,
                             ),
                       ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      tileColor: FlutterFlowTheme.of(context).primary,
                       dense: false,
                       controlAffinity: ListTileControlAffinity.trailing,
                     ),
@@ -249,12 +249,12 @@ class _ContentWidgetState extends State<ContentWidget> {
                       },
                       title: Text(
                         'Age 65 to 80, retired, male/female',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Poppins',
                               fontSize: 14.0,
                             ),
                       ),
-                      tileColor: FlutterFlowTheme.of(context).primaryColor,
+                      tileColor: FlutterFlowTheme.of(context).primary,
                       dense: false,
                       controlAffinity: ListTileControlAffinity.trailing,
                     ),
@@ -324,13 +324,14 @@ class _ContentWidgetState extends State<ContentWidget> {
                             20.0, 20.0, 20.0, 20.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                         textStyle: FlutterFlowTheme.of(context)
-                            .subtitle2
+                            .titleSmall
                             .override(
                               fontFamily: 'Poppins',
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
+                        elevation: 2.0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
